@@ -20,7 +20,7 @@ endforeach(GLSL)
 
 message(STATUS "Configuring GameEngine")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/engine/cmake/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/")
 
 # Add source files for the engine
 set(SOURCES
