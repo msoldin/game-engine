@@ -1,9 +1,9 @@
 //
 // Created by marvi on 09.03.2024.
 //
-#include "GameEngine.h"
+#include "deprecated/GameEngine.h"
 
-#include "Timer.h"
+#include "deprecated/Timer.h"
 
 #include <SDL2/SDL.h>
 

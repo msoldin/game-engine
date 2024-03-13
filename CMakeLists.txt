@@ -8,7 +8,7 @@ file(GLOB_RECURSE GLSL_SOURCE_FILES
         "${PROJECT_SOURCE_DIR}/shaders/*.vert"
 )
 
-foreach(GLSL ${GLSL_SOURCE_FILES})
+foreach (GLSL ${GLSL_SOURCE_FILES})
   get_filename_component(FILE_NAME ${GLSL} NAME)
   set(SPIRV "${PROJECT_SOURCE_DIR}/shaders/${FILE_NAME}.spv")
   add_custom_command(
@@ -16,7 +16,7 @@ foreach(GLSL ${GLSL_SOURCE_FILES})
           COMMAND glslc ${GLSL} -o ${SPIRV}
           DEPENDS ${GLSL})
   list(APPEND SPIRV_BINARY_FILES ${SPIRV})
-endforeach(GLSL)
+endforeach (GLSL)
 
 message(STATUS "Configuring GameEngine")
 
@@ -24,24 +24,28 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/")
 
 # Add source files for the engine
 set(SOURCES
-        src/GameEngine.cpp
-        src/RenderManager.cpp
-        src/InputManager.cpp
-        src/SceneManager.cpp
-        src/Timer.cpp
-        src/GLWFTest.cpp
+        src/Window.cpp
+        src/Device.cpp
+        src/Pipeline.cpp
+        src/deprecated/GameEngine.cpp
+        src/deprecated/RenderManager.cpp
+        src/deprecated/InputManager.cpp
+        src/deprecated/SceneManager.cpp
+        src/deprecated/Timer.cpp
 )
 
 # Add header files for the engine
 set(HEADERS
-        include/GameEngine.h
-        include/RenderManager.h
-        include/InputManager.h
-        include/InputDefinitions.h
-        include/Scene.h
-        include/SceneManager.h
-        include/Timer.h
-        include/GLWFTest.h
+        include/Device.h
+        include/Window.h
+        include/Pipeline.h
+        include/deprecated/GameEngine.h
+        include/deprecated/RenderManager.h
+        include/deprecated/InputManager.h
+        include/deprecated/InputDefinitions.h
+        include/deprecated/Scene.h
+        include/deprecated/SceneManager.h
+        include/deprecated/Timer.h
 )
 
 message(STATUS "${SPIRV_BINARY_FILES}")

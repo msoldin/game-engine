@@ -1,4 +1,4 @@
-#include "Timer.h"
+#include "deprecated/Timer.h"
 #include <SDL.h>
 
 namespace Engine {

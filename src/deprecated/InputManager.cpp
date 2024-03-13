@@ -1,4 +1,4 @@
-#include "InputManager.h"
+#include "deprecated/InputManager.h"
 #include <iostream>
 
 namespace Engine {

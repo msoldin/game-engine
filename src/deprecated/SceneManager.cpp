@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+#include "deprecated/SceneManager.h"
 
 namespace Engine {
     SceneManager::SceneManager() : m_scenes(std::vector<Scene *>()),

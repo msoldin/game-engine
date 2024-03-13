@@ -1,7 +1,7 @@
 //
 // Created by marvi on 11.03.2024.
 //
-#include "RenderManager.h"
+#include "deprecated/RenderManager.h"
 
 #include <cstdio>
 #include <SDL_image.h>
