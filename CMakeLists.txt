@@ -24,9 +24,15 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/")
 
 # Add source files for the engine
 set(SOURCES
-        src/Window.cpp
-        src/Device.cpp
-        src/Pipeline.cpp
+        src/model.cpp
+        src/window.cpp
+        src/device.cpp
+        src/pipeline.cpp
+        src/swap_chain.cpp
+        src/example_app.cpp
+        src/game_object.cpp
+        src/renderer.cpp
+        src/render_system.cpp
         src/deprecated/GameEngine.cpp
         src/deprecated/RenderManager.cpp
         src/deprecated/InputManager.cpp
@@ -36,9 +42,15 @@ set(SOURCES
 
 # Add header files for the engine
 set(HEADERS
-        include/Device.h
-        include/Window.h
-        include/Pipeline.h
+        include/model.h
+        include/device.h
+        include/window.h
+        include/pipeline.h
+        include/swap_chain.h
+        include/example_app.h
+        include/game_object.h
+        include/renderer.h
+        include/render_system.h
         include/deprecated/GameEngine.h
         include/deprecated/RenderManager.h
         include/deprecated/InputManager.h
