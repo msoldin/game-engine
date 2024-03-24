@@ -138,8 +138,8 @@ void Renderer::beginSwapChainRenderPass(VkCommandBuffer command_buffer) const {
   viewport.minDepth = 0.0f;
   viewport.maxDepth = 1.0f;
   VkRect2D scissor{{0, 0}, swap_chain_->getSwapChainExtent()};
-  vkCmdSetViewport(command_buffers_[current_image_index_], 0, 1, &viewport);
-  vkCmdSetScissor(command_buffers_[current_image_index_], 0, 1, &scissor);
+  vkCmdSetViewport(command_buffer, 0, 1, &viewport);
+  vkCmdSetScissor(command_buffer, 0, 1, &scissor);
 }
 
 void Renderer::endSwapChainRenderPass(VkCommandBuffer command_buffer) const {

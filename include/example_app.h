@@ -23,11 +23,11 @@ class ExampleApp {
   void run();
 
  private:
+  void loadGameObjects();
+
   Window window_{WIDHT, HEIGHT, "Vulkan"};
   Device device_{window_};
   Renderer renderer_{window_, device_};
   std::vector<GameObject> game_objects_;
-
-  void loadGameObjects();
 };
 }  // namespace vulkan_engine::gfx
