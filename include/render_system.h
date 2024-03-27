@@ -3,28 +3,30 @@
 //
 
 #pragma once
+#include "camera.h"
 #include "device.h"
 #include "game_object.h"
 #include "pipeline.h"
 
 namespace vulkan_engine::gfx {
 class RenderSystem {
-public:
-  RenderSystem(Device &device, VkRenderPass render_pass);
+ public:
+  RenderSystem(Device& device, VkRenderPass render_pass);
   ~RenderSystem();
-  RenderSystem(const RenderSystem &) = delete;
-  RenderSystem &operator=(const RenderSystem &) = delete;
+  RenderSystem(const RenderSystem&) = delete;
+  RenderSystem& operator=(const RenderSystem&) = delete;
 
   void renderGameObjects(VkCommandBuffer command_buffer,
-                         std::vector<GameObject> &game_objects);
+                         std::vector<GameObject>& game_objects,
+                         const Camera& camera);
 
-private:
+ private:
   void createPipelineLayout();
 
   void createPipeline(VkRenderPass render_pass);
 
-  Device &device_;
+  Device& device_;
   VkPipelineLayout pipeline_layout_;
   std::unique_ptr<Pipeline> pipeline_;
 };
-} // namespace vulkan_engine::gfx
+}  // namespace vulkan_engine::gfx

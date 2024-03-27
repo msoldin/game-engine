@@ -21,6 +21,7 @@ class Renderer {
   VkRenderPass getSwapChainRenderPass() const {
     return swap_chain_->getRenderPass();
   }
+  float getAspectRatio() const { return swap_chain_->extentAspectRatio(); }
   VkCommandBuffer getCurrentCommandBuffer() const {
     assert(is_frame_started_ &&
            "Cannot get command buffer when frame not started.");

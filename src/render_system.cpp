@@ -58,8 +58,12 @@ void RenderSystem::createPipeline(VkRenderPass render_pass) {
 }
 
 void RenderSystem::renderGameObjects(VkCommandBuffer command_buffer,
-                                     std::vector<GameObject>& game_objects) {
+                                     std::vector<GameObject>& game_objects,
+                                     const Camera& camera) {
   pipeline_->bind(command_buffer);
+
+  auto projectionView = camera.getProjection() * camera.getView();
+
   for (auto& obj : game_objects) {
     obj.transform.rotation.y =
         glm::mod(obj.transform.rotation.y + 0.0001f, glm::two_pi<float>());
@@ -68,7 +72,7 @@ void RenderSystem::renderGameObjects(VkCommandBuffer command_buffer,
 
     SimplePushConstantData push{};
     push.color = obj.color;
-    push.transform = obj.transform.mat4();
+    push.transform = projectionView * obj.transform.mat4();
     vkCmdPushConstants(
         command_buffer, pipeline_layout_,
         VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0,

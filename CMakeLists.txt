@@ -33,6 +33,7 @@ set(SOURCES
         src/game_object.cpp
         src/renderer.cpp
         src/render_system.cpp
+        src/camera.cpp
         src/deprecated/GameEngine.cpp
         src/deprecated/RenderManager.cpp
         src/deprecated/InputManager.cpp
@@ -58,6 +59,7 @@ set(HEADERS
         include/deprecated/Scene.h
         include/deprecated/SceneManager.h
         include/deprecated/Timer.h
+        include/camera.h
 )
 
 message(STATUS "${SPIRV_BINARY_FILES}")
