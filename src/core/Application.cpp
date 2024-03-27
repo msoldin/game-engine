@@ -1,22 +1,20 @@
 //
-// Created by marvi on 14.03.2024.
+// Created by marvi on 27.03.2024.
 //
 
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include "core/Application.h"
+#include "core/Timer.h"
 
-#include "example_app.h"
-#include "render_system.h"
+#include <glog/logging.h>
 
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
 #include <thread>
 
-namespace vulkan_engine::gfx {
+#include "render_system.h"
 
-// temporary helper function, creates a 1x1x1 cube centered at offset
-std::unique_ptr<Model> createCubeModel(Device& device, glm::vec3 offset) {
-  std::vector<Model::Vertex> vertices{
+namespace vulkan_engine::core {
+
+std::unique_ptr<gfx::Model> createCubeModel(gfx::Device& device, glm::vec3 offset) {
+  std::vector<gfx::Model::Vertex> vertices{
 
       // left face (white)
       {{-.5f, -.5f, -.5f}, {.9f, .9f, .9f}},
@@ -70,41 +68,69 @@ std::unique_ptr<Model> createCubeModel(Device& device, glm::vec3 offset) {
   for (auto& v : vertices) {
     v.m_position += offset;
   }
-  return std::make_unique<Model>(device, vertices);
+  return std::make_unique<gfx::Model>(device, vertices);
 }
 
-ExampleApp::ExampleApp() {
+Application::Application() {
   loadGameObjects();
 }
 
-ExampleApp::~ExampleApp() = default;
+void Application::run() {
+  running_ = true;
 
-void ExampleApp::run() {
-  RenderSystem render_system(device_, renderer_.getSwapChainRenderPass());
-  Camera camera{};
-  camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
-  //camera.setViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
+  uint64_t countedFrames = 0;
+  uint64_t countedUpdates = 0;
+  uint64_t accumulator = 0;
+
+  Timer fpsTimer{};
+  fpsTimer.start();
+
+  Timer frameTimer{};
 
   while (!window_.shouldClose()) {
     glfwPollEvents();
-    float aspect = renderer_.getAspectRatio();
-    //camera.setOrthographicProjection(-aspect, aspect, 1, -1, -1, 1);
-    camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
-    if (auto command_buffer = renderer_.beginFrame()) {
-      renderer_.beginSwapChainRenderPass(command_buffer);
-      render_system.renderGameObjects(command_buffer, game_objects_, camera);
-      renderer_.endSwapChainRenderPass(command_buffer);
-      renderer_.endFrame();
+
+    frameTimer.start();
+    double_t avgFps = static_cast<double_t> (countedFrames) / fpsTimer.getElapsedSeconds();
+    double_t avgUps = static_cast<double_t> (countedUpdates) / fpsTimer.getElapsedSeconds();
+    LOG(INFO) << "FPS: " << avgFps << " UPS: " << avgUps;
+
+    while (accumulator >= SCREEN_TIME_PER_FRAME) {
+      update(SCREEN_TIME_PER_FRAME);
+      accumulator -= SCREEN_TIME_PER_FRAME;
+      countedUpdates++;
     }
+
+    //m_renderManager->render();
+    countedFrames++;
+
+    uint64_t frameTime = frameTimer.getElapsedMilliseconds();
+    if (frameTime < SCREEN_TIME_PER_FRAME) {
+      std::this_thread::sleep_for(
+          std::chrono::milliseconds(SCREEN_TIME_PER_FRAME - frameTime));
+      frameTime = SCREEN_TIME_PER_FRAME;
+    }
+    accumulator += frameTime;
   }
 
   vkDeviceWaitIdle(device_.device());
 }
 
-void ExampleApp::loadGameObjects() {
-  std::shared_ptr<Model> model = createCubeModel(device_, {0.f, 0.f, 0.f});
+void Application::update(uint64_t deltaTime) {
+  float aspect = renderer_.getAspectRatio();
+  camera_.setViewDirection(glm::vec3(0.f), glm::vec3(0.0f, 0.f, 1.f));
+  camera_.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
+  if (auto command_buffer = renderer_.beginFrame()) {
+    renderer_.beginSwapChainRenderPass(command_buffer);
+    render_system_.renderGameObjects(command_buffer, game_objects_, camera_);
+    renderer_.endSwapChainRenderPass(command_buffer);
+    renderer_.endFrame();
+  }
+}
+void Application::loadGameObjects() {
+  std::shared_ptr<gfx::Model> model = createCubeModel(device_, {0.f, 0.f, 0.f});
 
-  auto cube = GameObject::createGameObject();
+  auto cube = gfx::GameObject::createGameObject();
   cube.model = model;
   cube.color = {.1f, .8f, .1f};
   cube.transform.translation = {.0f, .0f, 2.5f};
@@ -113,4 +139,4 @@ void ExampleApp::loadGameObjects() {
   game_objects_.push_back(std::move(cube));
 }
 
-}  // namespace vulkan_engine::gfx
+}  // namespace vulkan_engine::core

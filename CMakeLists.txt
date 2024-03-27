@@ -24,12 +24,13 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/")
 
 # Add source files for the engine
 set(SOURCES
+        src/core/Application.cpp
+        src/core/Timer.cpp
         src/model.cpp
         src/window.cpp
         src/device.cpp
         src/pipeline.cpp
         src/swap_chain.cpp
-        src/example_app.cpp
         src/game_object.cpp
         src/renderer.cpp
         src/render_system.cpp
@@ -48,7 +49,6 @@ set(HEADERS
         include/window.h
         include/pipeline.h
         include/swap_chain.h
-        include/example_app.h
         include/game_object.h
         include/renderer.h
         include/render_system.h
@@ -60,6 +60,8 @@ set(HEADERS
         include/deprecated/SceneManager.h
         include/deprecated/Timer.h
         include/camera.h
+        include/core/Application.h
+        include/core/Timer.h
 )
 
 message(STATUS "${SPIRV_BINARY_FILES}")
