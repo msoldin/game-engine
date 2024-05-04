@@ -5,8 +5,8 @@
 #pragma once
 #include <cstdint>
 
-#include "example_app.h"
 #include "render_system.h"
+#include "renderer.h"
 
 namespace vulkan_engine::core {
 

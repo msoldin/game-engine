@@ -47,21 +47,21 @@ class Device {
 
   Device& operator=(Device&&) = delete;
 
-  VkCommandPool getCommandPool() const { return commandPool; }
-  VkDevice device() const { return device_; }
-  VkSurfaceKHR surface() const { return surface_; }
-  VkQueue graphicsQueue() const { return graphicsQueue_; }
-  VkQueue presentQueue() const { return presentQueue_; }
+  VkCommandPool getCommandPool() const { return m_commandPool; }
+  VkDevice device() const { return m_device; }
+  VkSurfaceKHR surface() const { return m_surface; }
+  VkQueue graphicsQueue() const { return m_graphicsQueue; }
+  VkQueue presentQueue() const { return m_presentQueue; }
 
   SwapChainSupportDetails getSwapChainSupport() {
-    return querySwapChainSupport(physicalDevice);
+    return querySwapChainSupport(m_physicalDevice);
   }
 
   uint32_t findMemoryType(uint32_t typeFilter,
                           VkMemoryPropertyFlags properties);
 
   QueueFamilyIndices findPhysicalQueueFamilies() {
-    return findQueueFamilies(physicalDevice);
+    return findQueueFamilies(m_physicalDevice);
   }
 
   VkFormat findSupportedFormat(const std::vector<VkFormat>& candidates,
@@ -119,20 +119,20 @@ class Device {
 
   SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
 
-  VkInstance instance;
-  VkDebugUtilsMessengerEXT debugMessenger;
-  VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-  Window& window;
-  VkCommandPool commandPool;
+  VkInstance m_instance;
+  VkDebugUtilsMessengerEXT m_debugMessenger;
+  VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
+  Window& m_window;
+  VkCommandPool m_commandPool;
 
-  VkDevice device_;
-  VkSurfaceKHR surface_;
-  VkQueue graphicsQueue_;
-  VkQueue presentQueue_;
+  VkDevice m_device;
+  VkSurfaceKHR m_surface;
+  VkQueue m_graphicsQueue;
+  VkQueue m_presentQueue;
 
-  const std::vector<const char*> validationLayers = {
+  const std::vector<const char*> VALIDATION_LAYERS = {
       "VK_LAYER_KHRONOS_validation"};
-  const std::vector<const char*> deviceExtensions = {
+  const std::vector<const char*> DEVICE_EXTENSIONS = {
       VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 };
 }  // namespace vulkan_engine::gfx

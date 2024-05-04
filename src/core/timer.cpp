@@ -2,7 +2,7 @@
 // Created by marvi on 27.03.2024.
 //
 
-#include "core/Timer.h"
+#include "core/timer.h"
 
 namespace vulkan_engine::core {
 Timer::Timer() : started_(false) {}

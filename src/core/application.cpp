@@ -1,19 +1,17 @@
 //
 // Created by marvi on 27.03.2024.
 //
-
-#include "core/Application.h"
-#include "core/Timer.h"
-
 #include <glog/logging.h>
-
 #include <thread>
+
+#include <core/application.h>
+#include <core/timer.h>
 
 #include "render_system.h"
 
 namespace vulkan_engine::core {
-
-std::unique_ptr<gfx::Model> createCubeModel(gfx::Device& device, glm::vec3 offset) {
+std::unique_ptr<gfx::Model> createCubeModel(gfx::Device& device,
+                                            glm::vec3 offset) {
   std::vector<gfx::Model::Vertex> vertices{
 
       // left face (white)
@@ -91,8 +89,10 @@ void Application::run() {
     glfwPollEvents();
 
     frameTimer.start();
-    double_t avgFps = static_cast<double_t> (countedFrames) / fpsTimer.getElapsedSeconds();
-    double_t avgUps = static_cast<double_t> (countedUpdates) / fpsTimer.getElapsedSeconds();
+    double_t avgFps =
+        static_cast<double_t>(countedFrames) / fpsTimer.getElapsedSeconds();
+    double_t avgUps =
+        static_cast<double_t>(countedUpdates) / fpsTimer.getElapsedSeconds();
     LOG(INFO) << "FPS: " << avgFps << " UPS: " << avgUps;
 
     while (accumulator >= SCREEN_TIME_PER_FRAME) {
@@ -127,6 +127,7 @@ void Application::update(uint64_t deltaTime) {
     renderer_.endFrame();
   }
 }
+
 void Application::loadGameObjects() {
   std::shared_ptr<gfx::Model> model = createCubeModel(device_, {0.f, 0.f, 0.f});
 
@@ -138,5 +139,4 @@ void Application::loadGameObjects() {
 
   game_objects_.push_back(std::move(cube));
 }
-
 }  // namespace vulkan_engine::core
