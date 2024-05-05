@@ -6,8 +6,6 @@ target_sources(${PROJECT_NAME}
         entity_manager.cpp
         component_manager.cpp
         system_manager.cpp
-        allocator.cpp
-        linear_allocator.cpp
         PUBLIC
         ${PROJECT_SOURCE_DIR}/include/ecs/entity.hpp
         ${PROJECT_SOURCE_DIR}/include/ecs/component.hpp
@@ -15,6 +13,4 @@ target_sources(${PROJECT_NAME}
         ${PROJECT_SOURCE_DIR}/include/ecs/entity_manager.h
         ${PROJECT_SOURCE_DIR}/include/ecs/system_manager.hpp
         ${PROJECT_SOURCE_DIR}/include/ecs/component_manager.hpp
-        ${PROJECT_SOURCE_DIR}/include/ecs/allocator.hpp
-        ${PROJECT_SOURCE_DIR}/include/ecs/linear_allocator.hpp
 )

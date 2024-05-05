@@ -1,0 +1,10 @@
+target_sources(${PROJECT_NAME}
+        PRIVATE
+        allocator.cpp
+        linear_allocator.cpp
+        stack_allocator.cpp
+        PUBLIC
+        ${PROJECT_SOURCE_DIR}/include/memory/allocator.hpp
+        ${PROJECT_SOURCE_DIR}/include/memory/linear_allocator.hpp
+        ${PROJECT_SOURCE_DIR}/include/memory/stack_allocator.hpp
+)

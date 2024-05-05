@@ -6,7 +6,7 @@
 #define LINEAR_ALLOCATOR_HPP
 #include "allocator.hpp"
 
-namespace vulkan_engine::ecs {
+namespace vulkan_engine::memory {
 
 class LinearAllocator : public Allocator {
 
@@ -16,13 +16,10 @@ class LinearAllocator : public Allocator {
 
  private:
   void* allocate(size_t size, size_t alignment) override;
-  void deallocate(void* p) override {}
-  size_t allocated_size(void* p) override { return 0; }
-  void* m_start;
+  void deallocate(void* p) override;
   void* m_currentPos;
-  size_t m_spaceLeft;
 };
 
-}  // namespace vulkan_engine::ecs
+}  // namespace vulkan_engine::memory
 
 #endif  //LINEAR_ALLOCATOR_HPP

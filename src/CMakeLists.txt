@@ -1,5 +1,6 @@
 add_subdirectory(core)
 add_subdirectory(ecs)
+add_subdirectory(memory)
 target_sources(${PROJECT_NAME} PRIVATE
         camera.cpp
         device.cpp
