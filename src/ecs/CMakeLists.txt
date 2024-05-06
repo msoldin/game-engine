@@ -1,0 +1,17 @@
+target_sources(${PROJECT_NAME}
+        PRIVATE
+        entity.cpp
+        component.cpp
+        coordinator.cpp
+        entity_manager.cpp
+        component_manager.cpp
+        system_manager.cpp
+        PUBLIC
+        ${PROJECT_SOURCE_DIR}/include/ecs/system.hpp
+        ${PROJECT_SOURCE_DIR}/include/ecs/entity.hpp
+        ${PROJECT_SOURCE_DIR}/include/ecs/component.hpp
+        ${PROJECT_SOURCE_DIR}/include/ecs/coordinator.h
+        ${PROJECT_SOURCE_DIR}/include/ecs/entity_manager.h
+        ${PROJECT_SOURCE_DIR}/include/ecs/system_manager.hpp
+        ${PROJECT_SOURCE_DIR}/include/ecs/component_manager.hpp
+)

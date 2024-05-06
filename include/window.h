@@ -20,14 +20,14 @@ public:
 
   bool shouldClose() const;
 
-  bool wasWindowResized() { return m_framebufferResized; };
+  bool wasWindowResized() const { return m_framebufferResized; };
   void resetWindowResizedFlag() { m_framebufferResized = false; }
 
   VkExtent2D getExtent() const {
     return {static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height)};
   }
 
-  void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+  void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) const;
 
 private:
   static void framebufferResizeCallback(GLFWwindow *window, int width,

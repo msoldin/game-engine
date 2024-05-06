@@ -11,8 +11,7 @@
 
 namespace vulkan_engine::gfx {
 struct SimplePushConstantData {
-  glm::mat2 transform{1.0f};
-  glm::vec2 offset;
+  glm::mat4 transform{1.0f};
   alignas(16) glm::vec3 color;
 };
 
@@ -59,16 +58,21 @@ void RenderSystem::createPipeline(VkRenderPass render_pass) {
 }
 
 void RenderSystem::renderGameObjects(VkCommandBuffer command_buffer,
-                                     std::vector<GameObject>& game_objects) {
+                                     std::vector<GameObject>& game_objects,
+                                     const Camera& camera) {
   pipeline_->bind(command_buffer);
+
+  auto projectionView = camera.getProjection() * camera.getView();
+
   for (auto& obj : game_objects) {
-    obj.transform.rotation =
-        glm::mod(obj.transform.rotation + 0.01f, glm::two_pi<float>());
+    obj.transform.rotation.y =
+        glm::mod(obj.transform.rotation.y + 0.01f, glm::two_pi<float>());
+    obj.transform.rotation.x =
+        glm::mod(obj.transform.rotation.x + 0.01f, glm::two_pi<float>());
 
     SimplePushConstantData push{};
-    push.offset = obj.transform.translation;
     push.color = obj.color;
-    push.transform = obj.transform.mat2();
+    push.transform = projectionView * obj.transform.mat4();
     vkCmdPushConstants(
         command_buffer, pipeline_layout_,
         VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0,
