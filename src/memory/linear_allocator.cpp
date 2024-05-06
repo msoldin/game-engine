@@ -4,19 +4,26 @@
 
 #include <memory/linear_allocator.hpp>
 
+#include "memory/pointer_math.inl"
+
 namespace vulkan_engine::memory {
 LinearAllocator::LinearAllocator(size_t size, void* start)
     : Allocator(size, start), m_currentPos(start) {}
 
 void* LinearAllocator::allocate(size_t size, size_t alignment) {
-  if (std::align(alignment, size, m_currentPos, m_spaceLeft)) {
-    void* result = m_currentPos;
-    m_currentPos += size;
-    m_spaceLeft -= size;
-    m_numAllocations++;
-    return result;
-  }
-  return nullptr;
+  //calculate adjustment needed to keep object correctly aligned
+  size_t adjustment =
+      pointer_math::alignForwardAdjustment(m_currentPos, alignment);
+  //check if there is enough space left
+  if (m_spaceLeft - size - adjustment < size)
+    return nullptr;
+  //adjust p by adjustment
+  void* result = pointer_math::add(m_currentPos, adjustment);
+  //update current position
+  m_currentPos = pointer_math::add(result, size);
+  m_spaceLeft -= size + adjustment;
+  m_numAllocations++;
+  return result;
 }
 
 void LinearAllocator::deallocate(void* p) {

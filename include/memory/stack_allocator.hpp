@@ -19,7 +19,8 @@ class StackAllocator : public Allocator {
   void* m_head;
 
   struct AllocationHeader {
-    size_t padding;
+    size_t adjustment;
+    size_t size;
   };
 };
 

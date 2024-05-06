@@ -12,7 +12,6 @@ class LinearAllocator : public Allocator {
 
  public:
   LinearAllocator(size_t size, void* start);
-  ~LinearAllocator() override { free(m_start); }
 
  private:
   void* allocate(size_t size, size_t alignment) override;

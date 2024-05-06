@@ -12,12 +12,9 @@ namespace vulkan_engine::memory {
 class Allocator {
 
  public:
-  Allocator(size_t memorySize, void* memoryStart)
-      : m_size(memorySize),
-        m_start(memoryStart),
-        m_spaceLeft(memorySize),
-        m_numAllocations(0) {}
-  virtual ~Allocator() = default;
+  Allocator(size_t size, void* start)
+      : m_start(start), m_size(size), m_spaceLeft(size), m_numAllocations(0) {}
+  virtual ~Allocator() { free(m_start); }
   Allocator(Allocator&&) = delete;
   Allocator(const Allocator&) = delete;
   Allocator& operator=(Allocator&&) = delete;
@@ -28,7 +25,7 @@ class Allocator {
     return new (allocate(sizeof(T), alignof(T))) T(std::forward<Args>(args)...);
   }
 
-  void free(void* p) { deallocate(p); }
+  void dealloc(void* p) { deallocate(p); }
 
   size_t getSize() const { return m_size; }
   size_t getSpaceLeft() const { return m_spaceLeft; }

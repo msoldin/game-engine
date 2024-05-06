@@ -7,6 +7,7 @@ target_sources(${PROJECT_NAME}
         component_manager.cpp
         system_manager.cpp
         PUBLIC
+        ${PROJECT_SOURCE_DIR}/include/ecs/system.hpp
         ${PROJECT_SOURCE_DIR}/include/ecs/entity.hpp
         ${PROJECT_SOURCE_DIR}/include/ecs/component.hpp
         ${PROJECT_SOURCE_DIR}/include/ecs/coordinator.h
