@@ -7,15 +7,14 @@
 
 namespace vulkan_engine::memory {
 
-PoolAllocator::PoolAllocator(size_t memorySize, void* memoryStart,
-                             size_t objectSize, size_t objectAlignment)
-    : Allocator(memorySize, memoryStart),
-      m_objectSize(objectSize),
-      m_objectAlignment(objectAlignment) {
+PoolAllocator::PoolAllocator(const size_t memorySize, const size_t objectSize, const size_t objectAlignment)
+  : Allocator(memorySize),
+    m_objectSize(objectSize),
+    m_objectAlignment(objectAlignment) {
 
   size_t adjustment =
-      pointer_math::alignForwardAdjustment(memoryStart, objectAlignment);
-  m_freeList = static_cast<void**>(pointer_math::add(memoryStart, adjustment));
+      pointer_math::alignForwardAdjustment(m_memoryStart, objectAlignment);
+  m_freeList = static_cast<void**>(pointer_math::add(m_memoryStart, adjustment));
   size_t numBlocks = (memorySize - adjustment) / objectSize;
   void** p = m_freeList;
 
@@ -54,4 +53,4 @@ void PoolAllocator::deallocate(void* p) {
   m_numAllocations--;
 }
 
-}  // namespace vulkan_engine::memory
+} // namespace vulkan_engine::memory

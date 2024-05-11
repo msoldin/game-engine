@@ -7,10 +7,10 @@
 #include "memory/pointer_math.inl"
 
 namespace vulkan_engine::memory {
-LinearAllocator::LinearAllocator(size_t size, void* start)
-    : Allocator(size, start), m_currentPos(start) {}
+LinearAllocator::LinearAllocator(const size_t size)
+  : Allocator(size), m_currentPos(m_memoryStart) {}
 
-void* LinearAllocator::allocate(size_t size, size_t alignment) {
+void* LinearAllocator::allocate(const size_t size, const size_t alignment) {
   //calculate adjustment needed to keep object correctly aligned
   size_t adjustment =
       pointer_math::alignForwardAdjustment(m_currentPos, alignment);
@@ -30,4 +30,4 @@ void LinearAllocator::deallocate(void* p) {
   throw std::logic_error("LinearAllocator does not support deallocation");
 }
 
-}  // namespace vulkan_engine::memory
+} // namespace vulkan_engine::memory

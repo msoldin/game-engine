@@ -10,13 +10,16 @@ namespace vulkan_engine::ecs {
 
 class System {
 
- public:
+public:
   virtual ~System() = default;
-  virtual void preUpdate(uint64_t dt);
-  virtual void update(uint64_t dt);
-  virtual void postUpdate(uint64_t dt);
+
+  virtual void preUpdate(uint64_t dt) {}
+
+  virtual void update(uint64_t dt) {}
+
+  virtual void postUpdate(uint64_t dt) {}
 };
 
-}  // namespace vulkan_engine::ecs
+} // namespace vulkan_engine::ecs
 
 #endif  //SYSTEM_HPP

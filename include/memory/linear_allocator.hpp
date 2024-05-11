@@ -8,17 +8,19 @@
 
 namespace vulkan_engine::memory {
 
-class LinearAllocator : public Allocator {
+class LinearAllocator final : public Allocator {
 
- public:
-  LinearAllocator(size_t size, void* start);
+public:
+  explicit LinearAllocator(size_t size);
 
- private:
+private:
   void* allocate(size_t size, size_t alignment) override;
+
   void deallocate(void* p) override;
+
   void* m_currentPos;
 };
 
-}  // namespace vulkan_engine::memory
+} // namespace vulkan_engine::memory
 
 #endif  //LINEAR_ALLOCATOR_HPP

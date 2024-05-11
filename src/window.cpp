@@ -8,7 +8,7 @@
 
 namespace vulkan_engine::gfx {
 Window::Window(int width, int heigh, std::string title)
-    : m_width(width), m_height(heigh), m_windowName(title) {
+  : m_width(width), m_height(heigh), m_windowName(title) {
   initWindow();
 }
 
@@ -29,7 +29,8 @@ void Window::initWindow() {
 
 bool Window::shouldClose() const { return glfwWindowShouldClose(m_window); }
 
-void Window::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) const {
+void Window::createWindowSurface(VkInstance instance,
+                                 VkSurfaceKHR *surface) const {
   if (glfwCreateWindowSurface(instance, m_window, nullptr, surface) !=
       VK_SUCCESS) {
     throw std::runtime_error("Failed to create window surface");

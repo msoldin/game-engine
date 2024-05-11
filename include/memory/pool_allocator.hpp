@@ -8,19 +8,20 @@
 
 namespace vulkan_engine::memory {
 
-class PoolAllocator : public Allocator {
- public:
-  PoolAllocator(size_t memorySize, void* memoryStart, size_t objectSize,
-                size_t objectAlignment);
+class PoolAllocator final : public Allocator {
+public:
+  PoolAllocator(size_t memorySize, size_t objectSize, size_t objectAlignment);
 
- private:
+private:
   void* allocate(size_t size, size_t alignment) override;
+
   void deallocate(void* p) override;
+
   void** m_freeList;
   size_t m_objectSize;
   size_t m_objectAlignment;
 };
 
-}  // namespace vulkan_engine::memory
+} // namespace vulkan_engine::memory
 
 #endif  //POOL_ALLOCATOR_HPP

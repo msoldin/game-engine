@@ -8,13 +8,15 @@
 
 namespace vulkan_engine::memory {
 
-class StackAllocator : public Allocator {
- public:
-  StackAllocator(size_t memorySize, void* memoryStart);
+class StackAllocator final : public Allocator {
+public:
+  explicit StackAllocator(size_t memorySize);
 
- private:
+private:
   void* allocate(size_t size, size_t alignment) override;
+
   void deallocate(void* p) override;
+
   void* m_currentPos;
   void* m_head;
 
@@ -24,6 +26,6 @@ class StackAllocator : public Allocator {
   };
 };
 
-}  // namespace vulkan_engine::memory
+} // namespace vulkan_engine::memory
 
 #endif  //STACK_ALLOCATOR_HPP

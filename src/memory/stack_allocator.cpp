@@ -8,12 +8,12 @@
 
 namespace vulkan_engine::memory {
 
-StackAllocator::StackAllocator(size_t memorySize, void* memoryStart)
-    : Allocator(memorySize, memoryStart),
-      m_currentPos(memoryStart),
-      m_head(memoryStart) {}
+StackAllocator::StackAllocator(const size_t memorySize)
+  : Allocator(memorySize),
+    m_currentPos(m_memoryStart),
+    m_head(m_memoryStart) {}
 
-void* StackAllocator::allocate(size_t size, size_t alignment) {
+void* StackAllocator::allocate(const size_t size, const size_t alignment) {
   size_t adjustment = pointer_math::alignForwardAdjustmentWithHeader(
       m_currentPos, alignment, sizeof(AllocationHeader));
 
@@ -23,7 +23,7 @@ void* StackAllocator::allocate(size_t size, size_t alignment) {
   void* alignedAddress = pointer_math::add(m_currentPos, adjustment);
 
   auto* header = static_cast<AllocationHeader*>(
-      pointer_math::subtract(alignedAddress, sizeof(AllocationHeader)));
+    pointer_math::subtract(alignedAddress, sizeof(AllocationHeader)));
   header->adjustment = adjustment;
   header->size = size;
 
@@ -44,7 +44,7 @@ void StackAllocator::deallocate(void* p) {
 
   // Get the header by subtracting the size of the header from the pointer
   auto* allocationHeader = static_cast<AllocationHeader*>(
-      pointer_math::subtract(p, sizeof(AllocationHeader)));
+    pointer_math::subtract(p, sizeof(AllocationHeader)));
 
   // Check if the deallocation is in reverse order
   void* alignedOldPos =
@@ -60,4 +60,4 @@ void StackAllocator::deallocate(void* p) {
   m_numAllocations--;
 }
 
-}  // namespace vulkan_engine::memory
+} // namespace vulkan_engine::memory
