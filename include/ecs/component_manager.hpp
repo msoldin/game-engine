@@ -6,13 +6,12 @@
 #define COMPONENTMANAGER_HPP
 
 namespace vulkan_engine::ecs {
-
 class ComponentManager {
 public:
-    ComponentManager() = default;
-    ~ComponentManager() = default;
-};
+  ComponentManager() = default;
 
+  ~ComponentManager() = default;
+};
 }
 
 

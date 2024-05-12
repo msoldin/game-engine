@@ -7,7 +7,6 @@
 #include "allocator.hpp"
 
 namespace vulkan_engine::memory {
-
 class PoolAllocator final : public Allocator {
 public:
   PoolAllocator(size_t memorySize, size_t objectSize, size_t objectAlignment);
@@ -21,7 +20,6 @@ private:
   size_t m_objectSize;
   size_t m_objectAlignment;
 };
-
 } // namespace vulkan_engine::memory
 
 #endif  //POOL_ALLOCATOR_HPP

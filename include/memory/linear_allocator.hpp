@@ -7,9 +7,7 @@
 #include "allocator.hpp"
 
 namespace vulkan_engine::memory {
-
 class LinearAllocator final : public Allocator {
-
 public:
   explicit LinearAllocator(size_t size);
 
@@ -20,7 +18,6 @@ private:
 
   void* m_currentPos;
 };
-
 } // namespace vulkan_engine::memory
 
 #endif  //LINEAR_ALLOCATOR_HPP

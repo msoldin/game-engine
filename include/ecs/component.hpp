@@ -7,7 +7,6 @@
 #include <cstddef>
 
 namespace vulkan_engine::ecs {
-
 using ComponentTypeId = std::size_t;
 
 inline ComponentTypeId generateComponentTypeId() {
@@ -16,8 +15,7 @@ inline ComponentTypeId generateComponentTypeId() {
 }
 
 class Component {
-
- public:
+public:
   template <typename T>
   static ComponentTypeId getComponentTypeId() {
     //static only get initialized once, the first time this function is called
@@ -26,7 +24,6 @@ class Component {
     return typeId;
   }
 };
-
-}  // namespace vulkan_engine::ecs
+} // namespace vulkan_engine::ecs
 
 #endif  //COMPONENT_HPP

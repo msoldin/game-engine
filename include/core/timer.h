@@ -8,17 +8,23 @@
 
 namespace vulkan_engine::core {
 class Timer {
- public:
+public:
   Timer();
-  ~Timer();
-  void start();
-  void stop();
-  bool isStarted() const;
-  uint64_t getElapsedMilliseconds() const;
-  double_t getElapsedSeconds() const;
 
- private:
-  std::chrono::high_resolution_clock::time_point start_time_;
-  bool started_;
+  ~Timer();
+
+  void start();
+
+  void stop();
+
+  [[nodiscard]] bool isStarted() const;
+
+  [[nodiscard]] uint64_t getElapsedMilliseconds() const;
+
+  [[nodiscard]] double_t getElapsedSeconds() const;
+
+private:
+  std::chrono::high_resolution_clock::time_point m_startTime;
+  bool m_started;
 };
-}  // namespace vulkan_engine::core
+} // namespace vulkan_engine::core

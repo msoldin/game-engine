@@ -7,7 +7,6 @@
 #include "allocator.hpp"
 
 namespace vulkan_engine::memory {
-
 class StackAllocator final : public Allocator {
 public:
   explicit StackAllocator(size_t memorySize);
@@ -25,7 +24,6 @@ private:
     size_t size;
   };
 };
-
 } // namespace vulkan_engine::memory
 
 #endif  //STACK_ALLOCATOR_HPP

@@ -6,10 +6,8 @@
 #define ENTITY_MANAGER_H
 
 namespace vulkan_engine::ecs {
-    class EntityManager {
-
-
-    };
+class EntityManager {
+};
 }
 
 #endif //ENTITY_MANAGER_H

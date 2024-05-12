@@ -7,10 +7,9 @@
 #include <cstddef>
 
 namespace vulkan_engine::ecs {
-
 using EntityId = std::size_t;
 
-class Entity {};
-
-}  // namespace vulkan_engine::ecs
+class Entity {
+};
+} // namespace vulkan_engine::ecs
 #endif  //ENTITY_HPP

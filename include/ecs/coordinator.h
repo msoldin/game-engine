@@ -12,7 +12,6 @@
 #include "component_manager.hpp"
 
 namespace vulkan_engine::ecs {
-
 class Coordinator final {
   friend class CoordinatorBuilder;
 
@@ -25,7 +24,6 @@ private:
   std::unique_ptr<EntityManager> m_entityManager;
   std::unique_ptr<SystemManager> m_systemManager;
   std::unique_ptr<ComponentManager> m_compomnentManager;
-
 };
 } // namespace vulkan_engine::ecs
 

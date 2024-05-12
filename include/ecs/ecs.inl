@@ -9,7 +9,7 @@
 #include "coordinator_builder.inl"
 
 namespace vulkan_engine::ecs {
-static std::unique_ptr<CoordinatorBuilder> create() {
+inline std::unique_ptr<CoordinatorBuilder> create() {
   return std::make_unique<CoordinatorBuilder>();
 }
 }

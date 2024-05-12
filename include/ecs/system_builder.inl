@@ -17,7 +17,6 @@ public:
   virtual size_t getSize() = 0;
 
   virtual System* create(memory::Allocator* allocator) = 0;
-
 };
 
 template <typename T>

@@ -10,9 +10,7 @@
 #include "system_builder.inl"
 
 namespace vulkan_engine::ecs {
-
 class SystemManager final {
-
   friend class Coordinator;
 
 public:
@@ -34,7 +32,6 @@ private:
   std::vector<System*> m_systems;
   memory::LinearAllocator* m_systemAllocator;
 };
-
 } // namespace vulkan_engine::ecs
 
 #endif  //SYSTEM_MANAGER_H

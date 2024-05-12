@@ -8,12 +8,11 @@
 #include <utility>
 
 namespace vulkan_engine::memory {
-
 class Allocator {
-
 public:
   explicit Allocator(const size_t memorySize)
-    : m_memoryStart(malloc(memorySize)), m_size(memorySize), m_spaceLeft(memorySize), m_numAllocations(0) {}
+    : m_memoryStart(malloc(memorySize)), m_size(memorySize), m_spaceLeft(memorySize), m_numAllocations(0) {
+  }
 
   virtual ~Allocator() { free(m_memoryStart); }
 
@@ -30,9 +29,9 @@ public:
     return new(allocate(sizeof(T), alignof(T))) T(std::forward<Args>(args)...);
   }
 
-  size_t getSize() const { return m_size; }
-  size_t getSpaceLeft() const { return m_spaceLeft; }
-  size_t getNumAllocations() const { return m_numAllocations; }
+  [[nodiscard]] size_t getSize() const { return m_size; }
+  [[nodiscard]] size_t getSpaceLeft() const { return m_spaceLeft; }
+  [[nodiscard]] size_t getNumAllocations() const { return m_numAllocations; }
 
 private:
   virtual void* allocate(size_t size, size_t alignment) = 0;
@@ -45,7 +44,6 @@ protected:
   size_t m_spaceLeft;
   size_t m_numAllocations;
 };
-
 } // namespace vulkan_engine::memory
 
 #endif  //ALLOCATOR_HPP

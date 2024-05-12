@@ -16,6 +16,8 @@ else ()
     message(WARNING "Unsupported compiler, exception handling flags not set")
 endif ()
 
+set(CMAKE_CXX_CPPCHECK "cppcheck")
+
 # Create a library for the engine
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
         "${PROJECT_SOURCE_DIR}/src/*.cpp"

@@ -7,7 +7,6 @@
 
 #include <glog/logging.h>
 
-
 #include <memory>
 
 #include "coordinator.h"
@@ -39,8 +38,7 @@ public:
 private:
   std::vector<std::unique_ptr<ISystemCreator> > m_systemCreators;
 };
-
-}
+} // namespace vulkan_engine::ecs
 
 
 #endif //COORDINATOR_BUILDER_HPP

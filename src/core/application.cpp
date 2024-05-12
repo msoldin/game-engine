@@ -74,7 +74,7 @@ Application::Application() {
 }
 
 void Application::run() {
-  running_ = true;
+  m_running = true;
 
   uint64_t countedFrames = 0;
   uint64_t countedUpdates = 0;
@@ -85,13 +85,13 @@ void Application::run() {
 
   Timer frameTimer{};
 
-  while (!window_.shouldClose()) {
+  while (!m_window.shouldClose()) {
     glfwPollEvents();
 
     frameTimer.start();
-    double_t avgFps =
+    const double_t avgFps =
         static_cast<double_t>(countedFrames) / fpsTimer.getElapsedSeconds();
-    double_t avgUps =
+    const double_t avgUps =
         static_cast<double_t>(countedUpdates) / fpsTimer.getElapsedSeconds();
     LOG(INFO) << "FPS: " << avgFps << " UPS: " << avgUps;
 
@@ -113,23 +113,23 @@ void Application::run() {
     accumulator += frameTime;
   }
 
-  vkDeviceWaitIdle(device_.device());
+  vkDeviceWaitIdle(m_device.device());
 }
 
 void Application::update(uint64_t deltaTime) {
-  float aspect = renderer_.getAspectRatio();
-  camera_.setViewDirection(glm::vec3(0.f), glm::vec3(0.0f, 0.f, 1.f));
-  camera_.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
-  if (auto command_buffer = renderer_.beginFrame()) {
-    renderer_.beginSwapChainRenderPass(command_buffer);
-    render_system_.renderGameObjects(command_buffer, game_objects_, camera_);
-    renderer_.endSwapChainRenderPass(command_buffer);
-    renderer_.endFrame();
+  float aspect = m_renderer.getAspectRatio();
+  m_camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.0f, 0.f, 1.f));
+  m_camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
+  if (auto *command_buffer = m_renderer.beginFrame()) {
+    m_renderer.beginSwapChainRenderPass(command_buffer);
+    m_renderSystem.renderGameObjects(command_buffer, m_gameObjects, m_camera);
+    m_renderer.endSwapChainRenderPass(command_buffer);
+    m_renderer.endFrame();
   }
 }
 
 void Application::loadGameObjects() {
-  std::shared_ptr<gfx::Model> model = createCubeModel(device_, {0.f, 0.f, 0.f});
+  std::shared_ptr<gfx::Model> model = createCubeModel(m_device, {0.f, 0.f, 0.f});
 
   auto cube = gfx::GameObject::createGameObject();
   cube.model = model;
@@ -137,6 +137,6 @@ void Application::loadGameObjects() {
   cube.transform.translation = {.0f, .0f, 2.5f};
   cube.transform.scale = {.5f, .5f, .5f};
 
-  game_objects_.push_back(std::move(cube));
+  m_gameObjects.push_back(std::move(cube));
 }
-}  // namespace vulkan_engine::core
+} // namespace vulkan_engine::core
