@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.22.1)
-project(GameEngine)
+cmake_minimum_required(VERSION 3.30.2)
+project(GameEngine CXX)
 
 ############## Build Library #######################
 
@@ -12,11 +12,12 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     # GCC or Clang compiler
     # Ignore till exceptions are fixed
     # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions")
+    set(CMAKE_CXX_STANDARD 23)
+    set(CMAKE_CXX_EXTENSIONS OFF)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
 else ()
     message(WARNING "Unsupported compiler, exception handling flags not set")
 endif ()
-
-set(CMAKE_CXX_CPPCHECK "cppcheck")
 
 # Create a library for the engine
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
@@ -29,12 +30,22 @@ file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS
         "${PROJECT_SOURCE_DIR}/include/*.inl"
 )
 
+file(GLOB_RECURSE MODULE_FILES CONFIGURE_DEPENDS
+    "${PROJECT_SOURCE_DIR}/src/*.ixx"
+    "${PROJECT_SOURCE_DIR}/src/*.cppm"
+)
+
+message(STATUS "MODULES ${MODULE_FILES}")
+
 # Exclude all source files in a "deprecated" directory
 list(FILTER SOURCE_FILES EXCLUDE REGEX ".*/deprecated/.*")
 list(FILTER HEADER_FILES EXCLUDE REGEX ".*/deprecated/.*")
+list(FILTER MODULE_FILES EXCLUDE REGEX ".*/deprecated/.*")
 
 # Include all source files
-add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(${PROJECT_NAME} STATIC)
+target_sources(${PROJECT_NAME} PUBLIC ${SOURCE_FILES} ${HEADER_FILES})
+target_sources(${PROJECT_NAME} PUBLIC FILE_SET CXX_MODULES FILES ${MODULE_FILES})
 
 #Add the SDL2 image and sdl2 ttf library also
 find_package(Vulkan REQUIRED)
@@ -44,7 +55,7 @@ find_package(Glog REQUIRED)
 
 # Include directories for the engine library
 target_link_libraries(${PROJECT_NAME} glog::glog glfw Vulkan::Vulkan glm::glm)
-target_include_directories(${PROJECT_NAME} PUBLIC include)
+target_include_directories(${PROJECT_NAME} PUBLIC include src)
 
 ############## Build SHADERS #######################
 
