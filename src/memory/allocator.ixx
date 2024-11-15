@@ -1,14 +1,13 @@
 //
-// Created by marvi on 04.05.2024.
+// Created by marvi on 15.11.2024.
 //
-
-#ifndef ALLOCATOR_HPP
-#define ALLOCATOR_HPP
+module;
 #include <memory>
 #include <utility>
+export module vulkan_engine.memory:allocator;
 
 namespace vulkan_engine::memory {
-class Allocator {
+export class Allocator {
 public:
   explicit Allocator(const size_t memorySize)
     : m_memoryStart(malloc(memorySize)), m_size(memorySize), m_spaceLeft(memorySize), m_numAllocations(0) {
@@ -44,6 +43,4 @@ protected:
   size_t m_spaceLeft;
   size_t m_numAllocations;
 };
-} // namespace vulkan_engine::memory
-
-#endif  //ALLOCATOR_HPP
+}

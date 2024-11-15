@@ -1,18 +1,13 @@
 //
 // Created by marvi on 04.05.2024.
 //
-
-#ifndef COMPONENTMANAGER_HPP
-#define COMPONENTMANAGER_HPP
+export module vulkan_engine.ecs:component_manager;
 
 namespace vulkan_engine::ecs {
-class ComponentManager {
+export class ComponentManager {
 public:
   ComponentManager() = default;
 
   ~ComponentManager() = default;
 };
 }
-
-
-#endif //COMPONENTMANAGER_HPP
