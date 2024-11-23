@@ -20,31 +20,13 @@ else ()
 endif ()
 
 # Create a library for the engine
-file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
-        "${PROJECT_SOURCE_DIR}/src/*.cpp"
-)
-
-file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS
-        "${PROJECT_SOURCE_DIR}/include/*.h"
-        "${PROJECT_SOURCE_DIR}/include/*.hpp"
-        "${PROJECT_SOURCE_DIR}/include/*.inl"
-)
-
 file(GLOB_RECURSE MODULE_FILES CONFIGURE_DEPENDS
     "${PROJECT_SOURCE_DIR}/src/*.ixx"
     "${PROJECT_SOURCE_DIR}/src/*.cppm"
 )
 
-message(STATUS "MODULES ${MODULE_FILES}")
-
-# Exclude all source files in a "deprecated" directory
-list(FILTER SOURCE_FILES EXCLUDE REGEX ".*/deprecated/.*")
-list(FILTER HEADER_FILES EXCLUDE REGEX ".*/deprecated/.*")
-list(FILTER MODULE_FILES EXCLUDE REGEX ".*/deprecated/.*")
-
 # Include all source files
 add_library(${PROJECT_NAME} STATIC)
-target_sources(${PROJECT_NAME} PUBLIC ${SOURCE_FILES} ${HEADER_FILES})
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET CXX_MODULES FILES ${MODULE_FILES})
 
 #Add the SDL2 image and sdl2 ttf library also

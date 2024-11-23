@@ -1,7 +1,3 @@
-//
-// Created by marvi on 15.11.2024.
-//
-
 export module vulkan_engine.memory;
 
 export import :allocator;

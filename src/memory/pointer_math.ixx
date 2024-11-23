@@ -1,7 +1,3 @@
-//
-// Created by marvi on 15.11.2024.
-//
-
 module;
 #include <memory>
 export module vulkan_engine.memory:pointer_math;

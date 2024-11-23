@@ -1,10 +1,7 @@
-//
-// Created by marvi on 05.05.2024.
-//
-
 module;
-#include <cassert>
 #include <unistd.h>
+
+#include <cassert>
 export module vulkan_engine.memory:stack_allocator;
 
 import :allocator;

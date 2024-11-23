@@ -1,7 +1,3 @@
-//
-// Created by marvi on 05.05.2024.
-//
-
 module;
 #include <unistd.h>
 

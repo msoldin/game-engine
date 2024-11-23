@@ -3,18 +3,22 @@
 //
 
 module;
-
+#define GLFW_INCLUDE_VULKAN
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include <GLFW/glfw3.h>
 #include <glog/logging.h>
 
 #include <cstdint>
+#include <glm/glm.hpp>
+#include <memory>
 #include <thread>
-
-#include "render_system.h"
-#include "renderer.h"
 
 export module vulkan_engine.core:application;
 
 import :timer;
+
+import vulkan_engine.gfx;
 
 namespace {
 std::unique_ptr<vulkan_engine::gfx::Model> createCubeModel(vulkan_engine::gfx::Device& device, glm::vec3 offset) {
