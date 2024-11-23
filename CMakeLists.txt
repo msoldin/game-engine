@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.30.2)
 project(GameEngine CXX)
 
 ############## Build Library #######################
-
 # Check the compiler type
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     # Visual Studio compiler
@@ -18,6 +17,8 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 else ()
     message(WARNING "Unsupported compiler, exception handling flags not set")
 endif ()
+
+add_subdirectory(vendor)
 
 # Create a library for the engine
 file(GLOB_RECURSE MODULE_FILES CONFIGURE_DEPENDS
@@ -36,7 +37,7 @@ find_package(glm REQUIRED)
 find_package(Glog REQUIRED)
 
 # Include directories for the engine library
-target_link_libraries(${PROJECT_NAME} glog::glog glfw Vulkan::Vulkan glm::glm)
+target_link_libraries(${PROJECT_NAME} glog::glog glfw Vulkan::Vulkan glm::glm raylib)
 target_include_directories(${PROJECT_NAME} PUBLIC include src)
 
 ############## Build SHADERS #######################
