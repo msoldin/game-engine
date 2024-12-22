@@ -38,7 +38,7 @@ find_package(Glog REQUIRED)
 
 # Include directories for the engine library
 target_link_libraries(${PROJECT_NAME} glog::glog glfw Vulkan::Vulkan glm::glm raylib)
-target_include_directories(${PROJECT_NAME} PUBLIC include src)
+target_include_directories(${PROJECT_NAME} PUBLIC src)
 
 ############## Build SHADERS #######################
 

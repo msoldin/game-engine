@@ -17,20 +17,20 @@ export class SystemManager final {
  public:
   explicit SystemManager(std::vector<std::unique_ptr<ISystemCreator>>& systemCreators) {
     // Calculate the size of each ISystem Objects
-    size_t systemSize = 0;
+    size_t system_size = 0;
     for (const auto& creator : systemCreators) {
-      systemSize += creator->getSize();
+      system_size += creator->getSize();
     }
-    systemSize = memory::pointer_math::nextPowerOfTwo(systemSize);
-    m_systemAllocator = new memory::LinearAllocator(systemSize);
+    system_size = memory::pointer_math::nextPowerOfTwo(system_size);
+    m_system_allocator = new memory::LinearAllocator(system_size);
     m_systems.reserve(systemCreators.size());
 
     for (const auto& creator : systemCreators) {
-      m_systems.push_back(creator->create(m_systemAllocator));
+      m_systems.push_back(creator->create(m_system_allocator));
     }
   }
 
-  ~SystemManager() { delete m_systemAllocator; }
+  ~SystemManager() { delete m_system_allocator; }
 
   SystemManager(SystemManager&&) = delete;
 
@@ -54,7 +54,7 @@ export class SystemManager final {
 
  private:
   std::vector<System*> m_systems;
-  memory::LinearAllocator* m_systemAllocator;
+  memory::LinearAllocator* m_system_allocator;
 };
 
 }  // namespace vulkan_engine::ecs

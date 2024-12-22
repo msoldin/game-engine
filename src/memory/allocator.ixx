@@ -6,9 +6,11 @@ export module vulkan_engine.memory:allocator;
 namespace vulkan_engine::memory {
 export class Allocator {
  public:
-  explicit Allocator(const size_t memorySize) : m_memoryStart(malloc(memorySize)), m_size(memorySize), m_spaceLeft(memorySize), m_numAllocations(0) {}
+  explicit Allocator(const size_t memory_size) : Allocator(malloc(memory_size), memory_size) {}
 
-  virtual ~Allocator() { free(m_memoryStart); }
+  Allocator(void* memory_start, const size_t memory_size) : m_memory_start(memory_start), m_size(memory_size), m_space_left(memory_size) {}
+
+  virtual ~Allocator() { free(m_memory_start); }
 
   Allocator(Allocator&&) = delete;
 
@@ -24,18 +26,17 @@ export class Allocator {
   }
 
   [[nodiscard]] size_t getSize() const { return m_size; }
-  [[nodiscard]] size_t getSpaceLeft() const { return m_spaceLeft; }
-  [[nodiscard]] size_t getNumAllocations() const { return m_numAllocations; }
+  [[nodiscard]] size_t getSpaceLeft() const { return m_space_left; }
+  [[nodiscard]] size_t getNumAllocations() const { return m_num_allocations; }
 
- private:
+ protected:
   virtual void* allocate(size_t size, size_t alignment) = 0;
 
   virtual void deallocate(void* p) = 0;
 
- protected:
-  void* m_memoryStart;
+  void* m_memory_start;
   size_t m_size;
-  size_t m_spaceLeft;
-  size_t m_numAllocations;
+  size_t m_space_left;
+  size_t m_num_allocations{0};
 };
 }  // namespace vulkan_engine::memory

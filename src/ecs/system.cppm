@@ -22,7 +22,7 @@ export class System {
   virtual void postUpdate(uint64_t dt) = 0;
 };
 
-export class ISystemCreator {
+class ISystemCreator {
  public:
   virtual ~ISystemCreator() = default;
 
@@ -31,7 +31,7 @@ export class ISystemCreator {
   virtual System* create(memory::Allocator* allocator) = 0;
 };
 
-export template <typename T>
+template <typename T>
 class SystemCreator final : public ISystemCreator {
  public:
   template <typename... Args>

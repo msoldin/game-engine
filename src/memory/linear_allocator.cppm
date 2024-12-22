@@ -9,30 +9,32 @@ import :allocator;
 import :pointer_math;
 
 namespace vulkan_engine::memory {
-export class LinearAllocator final : public Allocator {
+export class LinearAllocator : public Allocator {
  public:
-  explicit LinearAllocator(const size_t size) : Allocator(size), m_currentPos(m_memoryStart) {}
+  explicit LinearAllocator(const size_t size) : Allocator(size), m_current_pos(m_memory_start) {}
 
- private:
+  LinearAllocator(void* memory_start, const size_t memory_size) : Allocator(memory_start, memory_size), m_current_pos(m_memory_start) {}
+
+ protected:
   void* allocate(const size_t size, const size_t alignment) override {
     // calculate adjustment needed to keep object correctly aligned
-    const size_t adjustment = pointer_math::alignForwardAdjustment(m_currentPos, alignment);
+    const size_t adjustment = pointer_math::alignForwardAdjustment(m_current_pos, alignment);
     // check if there is enough space left
-    if (m_spaceLeft - size - adjustment < size) {
+    if (m_space_left - size - adjustment < size) {
       return nullptr;
     }
     // adjust p by adjustment
-    void* result = pointer_math::add(m_currentPos, adjustment);
+    void* result = pointer_math::add(m_current_pos, adjustment);
     // update current position
-    m_currentPos = pointer_math::add(result, size);
-    m_spaceLeft -= size + adjustment;
-    m_numAllocations++;
+    m_current_pos = pointer_math::add(result, size);
+    m_space_left -= size + adjustment;
+    m_num_allocations++;
     return result;
   }
 
   void deallocate(void* /*p*/) override { assert(false && "Use clear() to deallocate memory in LinearAllocator"); }
 
-  void* m_currentPos;
+  void* m_current_pos;
 };
 
 }  // namespace vulkan_engine::memory

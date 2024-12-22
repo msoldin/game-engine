@@ -18,13 +18,13 @@ inline size_t alignForwardAdjustment(const void* address, const size_t alignment
 inline size_t alignForwardAdjustmentWithHeader(const void* address, const size_t alignment, const size_t headerSize) {
   size_t adjustment = alignForwardAdjustment(address, alignment);
 
-  if (size_t neededSpace = headerSize; adjustment < neededSpace) {
-    neededSpace -= adjustment;
+  if (size_t needed_space = headerSize; adjustment < needed_space) {
+    needed_space -= adjustment;
 
     // Increase adjustment to fit header
-    adjustment += alignment * (neededSpace / alignment);
+    adjustment += alignment * (needed_space / alignment);
 
-    if (neededSpace % alignment > 0) {
+    if (needed_space % alignment > 0) {
       adjustment += alignment;
     }
   }
