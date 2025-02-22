@@ -14,5 +14,5 @@ export import :system_manager;
 export import :component_manager;
 
 namespace vulkan_engine::ecs {
-export std::unique_ptr<CoordinatorBuilder> create() { return std::make_unique<CoordinatorBuilder>(); }
+export CoordinatorBuilder create() { return CoordinatorBuilder{}; }
 }  // namespace vulkan_engine::ecs

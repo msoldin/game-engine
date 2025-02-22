@@ -17,6 +17,7 @@ import :component_manager;
 import :entity;
 
 namespace vulkan_engine::ecs {
+class SystemManager;
 
 export class CoordinatorBuilder;
 

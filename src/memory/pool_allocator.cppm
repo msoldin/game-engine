@@ -27,6 +27,8 @@ export class PoolAllocator final : public Allocator {
     *p = nullptr;
   }
 
+  void free(void* p) { deallocate(p); }
+
  private:
   void* allocate(const size_t size, const size_t alignment) override {
     assert(size == m_object_size && alignment == m_object_alignment && "PoolAllocator can only allocate objects of the same size and alignment.");

@@ -4,11 +4,13 @@
 
 module;
 
+#include <concepts>
 #include <cstddef>
 
 export module vulkan_engine.ecs:component;
 
 namespace vulkan_engine::ecs {
+
 using ComponentTypeId = std::size_t;
 
 namespace {
@@ -19,16 +21,18 @@ ComponentTypeId generateComponentTypeId() {
 }  // namespace
 
 class IComponent {
-  friend class ComponentManager;
+  template<typename T>
+  friend class ComponentHandle;
 
  public:
   virtual ~IComponent() = default;
+  size_t getEntityId() const { return m_entity_id; }
 
  private:
   size_t m_entity_id = 0;
 };
 
-export template <size_t MaxComponents>
+export template <typename T>
 class Component : public IComponent {
  public:
   static ComponentTypeId getComponentTypeId() {
@@ -37,6 +41,8 @@ class Component : public IComponent {
     static ComponentTypeId const kTypeId = generateComponentTypeId();
     return kTypeId;
   }
-  static constexpr size_t getMaxComponents() { return MaxComponents; }
 };
+
+template <typename T>
+concept IsComponent = std::derived_from<T, IComponent>;
 }  // namespace vulkan_engine::ecs

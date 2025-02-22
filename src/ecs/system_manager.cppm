@@ -15,22 +15,20 @@ namespace vulkan_engine::ecs {
 
 export class SystemManager final {
  public:
-  explicit SystemManager(std::vector<std::unique_ptr<ISystemCreator>>& systemCreators) {
+  explicit SystemManager(const std::vector<std::unique_ptr<ISystemCreator>>& system_creators) {
     // Calculate the size of each ISystem Objects
     size_t system_size = 0;
-    for (const auto& creator : systemCreators) {
+    for (const auto& creator : system_creators) {
       system_size += creator->getSize();
     }
     system_size = memory::pointer_math::nextPowerOfTwo(system_size);
-    m_system_allocator = new memory::LinearAllocator(system_size);
-    m_systems.reserve(systemCreators.size());
+    m_system_allocator = std::make_unique<memory::LinearAllocator>(system_size);
+    m_systems.reserve(system_creators.size());
 
-    for (const auto& creator : systemCreators) {
-      m_systems.push_back(creator->create(m_system_allocator));
+    for (const auto& creator : system_creators) {
+      m_systems.push_back(creator->create(*m_system_allocator));
     }
   }
-
-  ~SystemManager() { delete m_system_allocator; }
 
   SystemManager(SystemManager&&) = delete;
 
@@ -40,7 +38,7 @@ export class SystemManager final {
 
   SystemManager& operator=(const SystemManager&) = delete;
 
-  void update(const uint64_t dt) {
+  void update(const uint64_t dt) const {
     for (auto* system : m_systems) {
       system->preUpdate(dt);
     }
@@ -54,7 +52,7 @@ export class SystemManager final {
 
  private:
   std::vector<System*> m_systems;
-  memory::LinearAllocator* m_system_allocator;
+  std::unique_ptr<memory::LinearAllocator> m_system_allocator;
 };
 
 }  // namespace vulkan_engine::ecs

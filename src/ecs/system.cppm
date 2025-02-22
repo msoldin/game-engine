@@ -28,7 +28,7 @@ class ISystemCreator {
 
   virtual size_t getSize() = 0;
 
-  virtual System* create(memory::Allocator* allocator) = 0;
+  virtual System* create(memory::Allocator& allocator) = 0;
 };
 
 template <typename T>
@@ -36,7 +36,7 @@ class SystemCreator final : public ISystemCreator {
  public:
   template <typename... Args>
   explicit SystemCreator(Args&&... args) {
-    m_create = [args...](memory::Allocator* allocator) mutable { return allocator->makeNew<T>(args...); };
+    m_create = [args...](memory::Allocator& allocator) mutable { return allocator.makeNew<T>(args...); };
   }
 
   ~SystemCreator() override = default;
@@ -46,9 +46,9 @@ class SystemCreator final : public ISystemCreator {
     return sizeof(T) + alignof(T);
   }
 
-  System* create(memory::Allocator* allocator) override { return m_create(allocator); }
+  System* create(memory::Allocator& allocator) override { return m_create(allocator); }
 
  private:
-  std::function<T*(memory::Allocator*)> m_create;
+  std::function<T*(memory::Allocator&)> m_create;
 };
 }  // namespace vulkan_engine::ecs
