@@ -13,11 +13,10 @@ export class StackAllocator final : public Allocator {
  public:
   explicit StackAllocator(const size_t memorySize) : Allocator(memorySize), m_current_pos(m_memory_start), m_head(m_memory_start) {}
 
- protected:
   void* allocate(const size_t size, const size_t alignment) override {
     const size_t adjustment = pointer_math::alignForwardAdjustmentWithHeader(m_current_pos, alignment, sizeof(AllocationHeader));
 
-    if (m_space_left - adjustment - size < size) {
+    if (size + adjustment > m_space_left) {
       return nullptr;
     }
 
@@ -34,8 +33,8 @@ export class StackAllocator final : public Allocator {
     return aligned_address;
   }
 
-  void deallocate(void* p) override {
-    // Check if the pointer is outside of the stack
+  void free(void* p) override {
+    // Check if the pointer is outside the stack
     assert(m_num_allocations == 0 &&
            "StackAllocator cannot deallocate memory outside of the allocation "
            "stack.");
@@ -52,6 +51,7 @@ export class StackAllocator final : public Allocator {
     m_num_allocations--;
   }
 
+ private:
   void* m_current_pos;
   void* m_head;
 

@@ -27,9 +27,6 @@ export class PoolAllocator final : public Allocator {
     *p = nullptr;
   }
 
-  void free(void* p) { deallocate(p); }
-
- private:
   void* allocate(const size_t size, const size_t alignment) override {
     assert(size == m_object_size && alignment == m_object_alignment && "PoolAllocator can only allocate objects of the same size and alignment.");
 
@@ -46,13 +43,14 @@ export class PoolAllocator final : public Allocator {
     return result;
   }
 
-  void deallocate(void* p) override {
+  void free(void* p) override {
     *static_cast<void**>(p) = m_free_list;  // NOLINT(*-multi-level-implicit-pointer-conversion)
     m_free_list = static_cast<void**>(p);
     m_space_left += m_object_size;
     m_num_allocations--;
   }
 
+ private:
   void** m_free_list;
   size_t m_object_size;
   size_t m_object_alignment;

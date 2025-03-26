@@ -18,7 +18,20 @@ else ()
     message(WARNING "Unsupported compiler, exception handling flags not set")
 endif ()
 
-add_subdirectory(vendor)
+# Add CMake Script folder
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(BuildShaders)
+
+#Add required libs for build
+find_package(Vulkan REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
+find_package(Glog REQUIRED)
+find_package(GTest REQUIRED)
+#add_subdirectory(vendor)
+
+# Enable testing with CTest
+enable_testing()
 
 # Create a library for the engine
 file(GLOB_RECURSE MODULE_FILES CONFIGURE_DEPENDS
@@ -30,36 +43,10 @@ file(GLOB_RECURSE MODULE_FILES CONFIGURE_DEPENDS
 add_library(${PROJECT_NAME} STATIC)
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET CXX_MODULES FILES ${MODULE_FILES})
 
-#Add the SDL2 image and sdl2 ttf library also
-find_package(Vulkan REQUIRED)
-find_package(glfw3 REQUIRED)
-find_package(glm REQUIRED)
-find_package(Glog REQUIRED)
-
 # Include directories for the engine library
-target_link_libraries(${PROJECT_NAME} glog::glog glfw Vulkan::Vulkan glm::glm raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE glog::glog glfw Vulkan::Vulkan glm::glm)
 target_include_directories(${PROJECT_NAME} PUBLIC src)
 
-############## Build SHADERS #######################
-
-# get all .vert and .frag files in shaders directory
-file(GLOB_RECURSE GLSL_SOURCE_FILES
-        "${PROJECT_SOURCE_DIR}/shaders/*.frag"
-        "${PROJECT_SOURCE_DIR}/shaders/*.vert"
-)
-
-foreach (GLSL ${GLSL_SOURCE_FILES})
-    get_filename_component(FILE_NAME ${GLSL} NAME)
-    set(SPIRV "${PROJECT_SOURCE_DIR}/shaders/${FILE_NAME}.spv")
-    add_custom_command(
-            OUTPUT ${SPIRV}
-            COMMAND glslc ${GLSL} -o ${SPIRV}
-            DEPENDS ${GLSL})
-    list(APPEND SPIRV_BINARY_FILES ${SPIRV})
-endforeach (GLSL)
-
-message(STATUS "Configuring GameEngine")
-
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/")
-
-message(STATUS "${SPIRV_BINARY_FILES}")
+# Add the test folder to the project
+add_subdirectory(test)
+add_subdirectory(benchmark)

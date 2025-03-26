@@ -6,11 +6,14 @@ module;
 #include <cstdint>
 #include <functional>
 
-import vulkan_engine.memory;
-
 export module vulkan_engine.ecs:system;
 
+import vulkan_engine.memory;
+import :entity_manager;
+import :component_manager;
+
 namespace vulkan_engine::ecs {
+
 export class System {
  public:
   virtual ~System() = default;
@@ -20,35 +23,5 @@ export class System {
   virtual void update(uint64_t dt) = 0;
 
   virtual void postUpdate(uint64_t dt) = 0;
-};
-
-class ISystemCreator {
- public:
-  virtual ~ISystemCreator() = default;
-
-  virtual size_t getSize() = 0;
-
-  virtual System* create(memory::Allocator& allocator) = 0;
-};
-
-template <typename T>
-class SystemCreator final : public ISystemCreator {
- public:
-  template <typename... Args>
-  explicit SystemCreator(Args&&... args) {
-    m_create = [args...](memory::Allocator& allocator) mutable { return allocator.makeNew<T>(args...); };
-  }
-
-  ~SystemCreator() override = default;
-
-  size_t getSize() override {
-    // Object size+alignment is important for the allocator
-    return sizeof(T) + alignof(T);
-  }
-
-  System* create(memory::Allocator& allocator) override { return m_create(allocator); }
-
- private:
-  std::function<T*(memory::Allocator&)> m_create;
 };
 }  // namespace vulkan_engine::ecs

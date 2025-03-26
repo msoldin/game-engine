@@ -10,25 +10,14 @@ import vulkan_engine.memory;
 export module vulkan_engine.ecs:system_manager;
 
 import :system;
+import :component_manager;
+import :entity_manager;
 
 namespace vulkan_engine::ecs {
 
 export class SystemManager final {
  public:
-  explicit SystemManager(const std::vector<std::unique_ptr<ISystemCreator>>& system_creators) {
-    // Calculate the size of each ISystem Objects
-    size_t system_size = 0;
-    for (const auto& creator : system_creators) {
-      system_size += creator->getSize();
-    }
-    system_size = memory::pointer_math::nextPowerOfTwo(system_size);
-    m_system_allocator = std::make_unique<memory::LinearAllocator>(system_size);
-    m_systems.reserve(system_creators.size());
-
-    for (const auto& creator : system_creators) {
-      m_systems.push_back(creator->create(*m_system_allocator));
-    }
-  }
+  explicit SystemManager() {}
 
   SystemManager(SystemManager&&) = delete;
 
@@ -48,6 +37,12 @@ export class SystemManager final {
     for (auto* system : m_systems) {
       system->postUpdate(dt);
     }
+  }
+
+  template <class T, typename... Args>
+  SystemManager& add_system(Args&&... args) {
+    m_systems.push_back(new T(args...));
+    return *this;
   }
 
  private:

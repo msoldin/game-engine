@@ -22,19 +22,19 @@ export class Entity final {
   size_t getId() const { return m_entity_id; }
   template <IsComponent T, class... Args>
   void addComponent(Args... args) {
-    this->m_component_manager->addComponent<T>(m_entity_id, std::forward<T>(args)...);
+    m_component_manager->addComponent<T>(m_entity_id, std::forward<T>(args)...);
   }
   template <IsComponent T>
-  void removeComponent() {
-    this->m_component_manager->removeComponent<T>(m_entity_id);
+  void removeComponent() const {
+    m_component_manager->removeComponent<T>(m_entity_id);
   }
-  template<IsComponent T>
+  template <IsComponent T>
   std::optional<std::reference_wrapper<T>> getComponent() {
-    return this->m_component_manager->getComponent<T>(m_entity_id);
+    return m_component_manager->getComponent<T>(m_entity_id);
   }
   template <IsComponent... Ts>
   auto getComponents() const {
-    return this->m_component_manager->getComponents<Ts...>(m_entity_id);
+    return m_component_manager->getComponents<Ts...>(m_entity_id);
   }
 };
 }  // namespace vulkan_engine::ecs

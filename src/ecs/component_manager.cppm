@@ -19,15 +19,15 @@ import :component_lookup_table;
 
 namespace vulkan_engine::ecs {
 
-class IComponentHandle {
+class IComponentRegistry {
  public:
-  virtual ~IComponentHandle() = default;
+  virtual ~IComponentRegistry() = default;
 };
 
 template <typename T>
-class ComponentHandle final : public IComponentHandle {
+class ComponentRegistry final : public IComponentRegistry {
  public:
-  ~ComponentHandle() override = default;
+  ~ComponentRegistry() override = default;
   template <typename... Args>
   T& createComponent(size_t entity_id, Args... args) {
     T* component = m_allocator->makeNew<T>(std::forward<Args>(args)...);
@@ -60,7 +60,7 @@ class ComponentHandle final : public IComponentHandle {
 
  private:
   std::vector<T*> m_components;
-  std::unique_ptr<memory::PoolAllocator> m_allocator = std::make_unique<memory::PoolAllocator>(32 * sizeof(T), sizeof(T), alignof(T));
+  std::unique_ptr<memory::PoolAllocator> m_allocator = std::make_unique<memory::PoolAllocator>(1000 * sizeof(T), sizeof(T), alignof(T));
 };
 
 export class ComponentManager {
@@ -72,10 +72,10 @@ export class ComponentManager {
   template <IsComponent T, class... Args>
   void addComponent(size_t entity_id, Args... args) {
     const ComponentTypeId component_type_id = T::getComponentTypeId();
-    if (const auto& it = m_component_lookup.find(component_type_id); it == m_component_lookup.end()) {
-      m_component_lookup[component_type_id] = std::make_unique<ComponentHandle<T>>();
+    if (const auto& it = m_component_registry_lookup.find(component_type_id); it == m_component_registry_lookup.end()) {
+      m_component_registry_lookup[component_type_id] = std::make_unique<ComponentRegistry<T>>();
     }
-    auto& component_handle = *dynamic_cast<ComponentHandle<T>*>(m_component_lookup[component_type_id].get());
+    auto& component_handle = *dynamic_cast<ComponentRegistry<T>*>(m_component_registry_lookup[component_type_id].get());
     if (m_component_lookup_table.getComponent<T>(entity_id).has_value()) {
       throw error::Error(error::ErrorType::kEcsError, "ComponentTypeId '{}' already exists with this EntityId '{}'", component_type_id, entity_id);
     }
@@ -87,7 +87,7 @@ export class ComponentManager {
   void removeComponent(const size_t entity_id) {
     m_component_lookup_table.removeComponent<T>(entity_id);
     const ComponentTypeId component_type_id = T::getComponentTypeId();
-    auto& component_handle = *dynamic_cast<ComponentHandle<T>*>(m_component_lookup[component_type_id].get());
+    auto& component_handle = *dynamic_cast<ComponentRegistry<T>*>(m_component_registry_lookup[component_type_id].get());
     component_handle.removeComponent(entity_id);
   }
 
@@ -103,20 +103,20 @@ export class ComponentManager {
 
   template <IsComponent T>
   auto components() const {
-    return getComponentHandle<T>().getComponents();
+    return getComponentRegistry<T>().getComponents();
   }
 
  private:
   template <IsComponent T>
-  ComponentHandle<T>& getComponentHandle() const {
+  ComponentRegistry<T>& getComponentRegistry() const {
     const ComponentTypeId component_type_id = T::getComponentTypeId();
-    const auto& it = m_component_lookup.find(component_type_id);
-    if (it == m_component_lookup.end()) {
+    const auto& it = m_component_registry_lookup.find(component_type_id);
+    if (it == m_component_registry_lookup.end()) {
       throw error::Error(error::ErrorType::kEcsError, "ComponentTypeId '{}' does not exists", component_type_id);
     }
-    return *dynamic_cast<ComponentHandle<T>*>(it->second.get());
+    return *dynamic_cast<ComponentRegistry<T>*>(it->second.get());
   }
   ComponentLookupTable m_component_lookup_table;
-  std::unordered_map<ComponentTypeId, std::unique_ptr<IComponentHandle>> m_component_lookup;
+  std::unordered_map<ComponentTypeId, std::unique_ptr<IComponentRegistry>> m_component_registry_lookup;
 };
 }  // namespace vulkan_engine::ecs

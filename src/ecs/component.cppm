@@ -22,7 +22,7 @@ ComponentTypeId generateComponentTypeId() {
 
 class IComponent {
   template<typename T>
-  friend class ComponentHandle;
+  friend class ComponentRegistry;
 
  public:
   virtual ~IComponent() = default;

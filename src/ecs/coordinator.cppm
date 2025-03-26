@@ -17,8 +17,6 @@ import :component_manager;
 import :entity;
 
 namespace vulkan_engine::ecs {
-class SystemManager;
-
 export class CoordinatorBuilder;
 
 export class Coordinator {
@@ -27,14 +25,15 @@ export class Coordinator {
 
   ComponentManager& getComponentManager() const { return *m_component_manager; }
   EntityManager& getEntityManager() const { return *m_entity_manager; }
+  SystemManager& getSystemManager() const { return *m_system_manager; }
   Entity* createEntity() const { return m_entity_manager->createEntity(m_component_manager.get()); }
 
  private:
-  explicit Coordinator(std::vector<std::unique_ptr<ISystemCreator>>& system_creators) {
-    m_system_manager = std::make_unique<SystemManager>(system_creators);
+  explicit Coordinator() {
     m_entity_manager = std::make_unique<EntityManager>();
     m_component_manager = std::make_unique<ComponentManager>();
-  };
+    m_system_manager = std::make_unique<SystemManager>();
+  }
   std::unique_ptr<EntityManager> m_entity_manager;
   std::unique_ptr<SystemManager> m_system_manager;
   std::unique_ptr<ComponentManager> m_component_manager;
@@ -56,16 +55,6 @@ class CoordinatorBuilder final {
 
   CoordinatorBuilder& operator=(const CoordinatorBuilder&) = delete;
 
-  template <typename T, typename... Args>
-  CoordinatorBuilder& registerSystem(Args&&... args) {
-    m_system_creators.push_back(std::make_unique<SystemCreator<T>>(std::forward<Args>(args)...));
-    return *this;
-  }
-
-  std::unique_ptr<Coordinator> build() { return std::unique_ptr<Coordinator>(new Coordinator(m_system_creators)); }
-
- private:
-  size_t m_memory_size;
-  std::vector<std::unique_ptr<ISystemCreator>> m_system_creators;
+  std::unique_ptr<Coordinator> build() { return std::unique_ptr<Coordinator>(new Coordinator()); }
 };
 }  // namespace vulkan_engine::ecs
