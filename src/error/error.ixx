@@ -1,6 +1,5 @@
 module;
 #include <format>
-#include <iostream>
 #include <sstream>
 #include <stdexcept>
 export module vulkan_engine.error;
@@ -12,7 +11,7 @@ export enum class ErrorType {
 
 export class Error final : public std::runtime_error {
  public:
-  //explicit Error(const ErrorType error_type, const std::string& message) : std::runtime_error(message), m_error_type(error_type) {}
+  // explicit Error(const ErrorType error_type, const std::string& message) : std::runtime_error(message), m_error_type(error_type) {}
 
   template <typename... Args>
   explicit Error(const ErrorType error_type, const std::string& message, Args&&... args)

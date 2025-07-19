@@ -1,12 +1,6 @@
-//
-// Created by marvi on 04.05.2024.
-//
-
 module;
-
 #include <concepts>
 #include <cstddef>
-
 export module vulkan_engine.ecs:component;
 
 namespace vulkan_engine::ecs {
@@ -21,7 +15,7 @@ ComponentTypeId generateComponentTypeId() {
 }  // namespace
 
 class IComponent {
-  template<typename T>
+  template <typename T>
   friend class ComponentRegistry;
 
  public:

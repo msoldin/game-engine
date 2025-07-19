@@ -1,7 +1,6 @@
 module;
 #include <unistd.h>
 #include <cassert>
-
 export module vulkan_engine.memory:linear_allocator;
 
 import :allocator;

@@ -2,6 +2,7 @@ module;
 #include <unistd.h>
 
 #include <cassert>
+#include <memory>
 #include <stdexcept>
 export module vulkan_engine.memory:pool_allocator;
 
@@ -12,6 +13,10 @@ namespace vulkan_engine::memory {
 
 export class PoolAllocator final : public Allocator {
  public:
+  template <typename T>
+  static std::unique_ptr<PoolAllocator> create(const size_t memorySize) {
+    return std::make_unique<PoolAllocator>(sizeof(T) * memorySize, sizeof(T), alignof(T));
+  }
   PoolAllocator(const size_t memorySize, const size_t objectSize, const size_t objectAlignment)
       : Allocator(memorySize), m_object_size(objectSize), m_object_alignment(objectAlignment) {
     const size_t adjustment = pointer_math::alignForwardAdjustment(m_memory_start, objectAlignment);

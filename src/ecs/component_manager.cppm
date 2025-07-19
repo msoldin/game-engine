@@ -1,6 +1,3 @@
-//
-// Created by marvi on 04.05.2024.
-//
 module;
 #include <glog/logging.h>
 
@@ -9,13 +6,13 @@ module;
 #include <ranges>
 #include <unordered_map>
 #include <vector>
-
-import vulkan_engine.memory;
-import vulkan_engine.error;
 export module vulkan_engine.ecs:component_manager;
 
 import :component;
 import :component_lookup_table;
+
+import vulkan_engine.memory;
+import vulkan_engine.error;
 
 namespace vulkan_engine::ecs {
 
@@ -60,7 +57,7 @@ class ComponentRegistry final : public IComponentRegistry {
 
  private:
   std::vector<T*> m_components;
-  std::unique_ptr<memory::PoolAllocator> m_allocator = std::make_unique<memory::PoolAllocator>(1000 * sizeof(T), sizeof(T), alignof(T));
+  std::unique_ptr<memory::IAllocator> m_allocator = std::make_unique<memory::ChunkAllocator<T>>(100);
 };
 
 export class ComponentManager {

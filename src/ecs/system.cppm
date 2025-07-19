@@ -1,11 +1,5 @@
-//
-// Created by marvi on 15.11.2024.
-//
 module;
-
 #include <cstdint>
-#include <functional>
-
 export module vulkan_engine.ecs:system;
 
 import vulkan_engine.memory;

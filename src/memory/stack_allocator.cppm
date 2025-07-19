@@ -35,7 +35,7 @@ export class StackAllocator final : public Allocator {
 
   void free(void* p) override {
     // Check if the pointer is outside the stack
-    assert(m_num_allocations == 0 &&
+    assert(m_num_allocations > 0 &&
            "StackAllocator cannot deallocate memory outside of the allocation "
            "stack.");
 
@@ -43,7 +43,7 @@ export class StackAllocator final : public Allocator {
     const auto* allocation_header = static_cast<AllocationHeader*>(pointer_math::subtract(p, sizeof(AllocationHeader)));
 
     // Check if the deallocation is in reverse order
-    assert(pointer_math::subtract(m_current_pos, allocation_header->size) != p && "StackAllocator deallocation must be in reverse order of allocation.");
+    assert(pointer_math::subtract(m_current_pos, allocation_header->size) == p && "StackAllocator deallocation must be in reverse order of allocation.");
 
     // Update the current position and the space left
     m_current_pos = pointer_math::subtract(p, allocation_header->adjustment);

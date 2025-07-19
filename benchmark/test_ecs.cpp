@@ -140,7 +140,7 @@ class EcsFixture : public benchmark::Fixture {
     m_coordinator = vulkan_engine::ecs::create().build();
     m_coordinator->getSystemManager().add_system<PhysicSystem>(*m_coordinator);
     for (int i = 0; i < state.range(0); i++) {
-      const vulkan_engine::ecs::Entity* entity = m_coordinator->createEntity();
+      const vulkan_engine::ecs::Entity* entity = m_coordinator->getEntityManager().createEntity();
       m_coordinator->getComponentManager().addComponent<SimulationComponent>(entity->getId());
       m_coordinator->getComponentManager().addComponent<UselessComponent>(entity->getId());
     }

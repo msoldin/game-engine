@@ -1,6 +1,3 @@
-//
-// Created by marvi on 04.05.2024.
-//
 module;
 #include <cstddef>
 #include <optional>

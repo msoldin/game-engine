@@ -1,4 +1,5 @@
 # Prevent GoogleTest from overriding compiler options
+set(CMAKE_CTEST_ARGUMENTS "--parallel 4")
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 # Collect all test files in the test directory (recursively)

@@ -1,9 +1,7 @@
 module;
-
 #include <algorithm>
 #include <ranges>
 #include <vector>
-
 export module vulkan_engine.ecs:component_lookup_table;
 
 import :component;

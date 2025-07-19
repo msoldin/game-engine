@@ -2,12 +2,7 @@
 // Created by marvi on 03.05.2024.
 //
 module;
-
 #include <memory>
-#include <vector>
-
-import vulkan_engine.memory;
-
 export module vulkan_engine.ecs:coordinator;
 
 import :system;
@@ -23,16 +18,15 @@ export class Coordinator {
  public:
   void update(const uint64_t dt) const { m_system_manager->update(dt); };
 
-  ComponentManager& getComponentManager() const { return *m_component_manager; }
   EntityManager& getEntityManager() const { return *m_entity_manager; }
   SystemManager& getSystemManager() const { return *m_system_manager; }
-  Entity* createEntity() const { return m_entity_manager->createEntity(m_component_manager.get()); }
+  ComponentManager& getComponentManager() const { return *m_component_manager; }
 
  private:
   explicit Coordinator() {
-    m_entity_manager = std::make_unique<EntityManager>();
     m_component_manager = std::make_unique<ComponentManager>();
     m_system_manager = std::make_unique<SystemManager>();
+    m_entity_manager = std::make_unique<EntityManager>(m_component_manager.get());
   }
   std::unique_ptr<EntityManager> m_entity_manager;
   std::unique_ptr<SystemManager> m_system_manager;
