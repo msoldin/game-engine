@@ -6,15 +6,15 @@ module;
 #include <ranges>
 #include <unordered_map>
 #include <vector>
-export module vulkan_engine.ecs:component_manager;
+export module game_engine.ecs:component_manager;
 
 import :component;
 import :component_lookup_table;
 
-import vulkan_engine.memory;
-import vulkan_engine.error;
+import game_engine.memory;
+import game_engine.error;
 
-namespace vulkan_engine::ecs {
+namespace game_engine::ecs {
 
 class IComponentRegistry {
  public:
@@ -116,4 +116,4 @@ export class ComponentManager {
   ComponentLookupTable m_component_lookup_table;
   std::unordered_map<ComponentTypeId, std::unique_ptr<IComponentRegistry>> m_component_registry_lookup;
 };
-}  // namespace vulkan_engine::ecs
+}  // namespace game_engine::ecs

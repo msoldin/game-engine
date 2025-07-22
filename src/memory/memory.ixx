@@ -1,4 +1,4 @@
-export module vulkan_engine.memory;
+export module game_engine.memory;
 
 export import :allocator;
 export import :linear_allocator;

@@ -1,9 +1,9 @@
 module;
 #include <cassert>
 #include <memory>
-export module vulkan_engine.memory:pointer_math;
+export module game_engine.memory:pointer_math;
 
-export namespace vulkan_engine::memory::pointer_math {
+export namespace game_engine::memory::pointer_math {
 inline void* alignForward(void* address, const uintptr_t alignment) {
   assert((alignment & (alignment - 1)) == 0 && "Alignment must be a power of two");
 
@@ -44,4 +44,4 @@ inline void* add(const void* p, const uintptr_t x) { return reinterpret_cast<voi
 inline void* subtract(const void* p, const uintptr_t x) { return reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(p) - x); }
 
 inline uintptr_t nextPowerOfTwo(const uintptr_t value) { return std::bit_ceil(value); }
-}  // namespace vulkan_engine::memory::pointer_math
+}  // namespace game_engine::memory::pointer_math

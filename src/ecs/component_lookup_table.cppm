@@ -2,11 +2,11 @@ module;
 #include <algorithm>
 #include <ranges>
 #include <vector>
-export module vulkan_engine.ecs:component_lookup_table;
+export module game_engine.ecs:component_lookup_table;
 
 import :component;
 
-namespace vulkan_engine::ecs {
+namespace game_engine::ecs {
 struct ComponentLookupTableEntry {
   size_t entity_id;
   ComponentTypeId component_type_id;
@@ -84,4 +84,4 @@ class ComponentLookupTable {
   std::vector<ComponentLookupTableEntry> m_components;
 };
 
-}  // namespace vulkan_engine::ecs
+}  // namespace game_engine::ecs

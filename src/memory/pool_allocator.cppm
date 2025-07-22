@@ -4,12 +4,12 @@ module;
 #include <cassert>
 #include <memory>
 #include <stdexcept>
-export module vulkan_engine.memory:pool_allocator;
+export module game_engine.memory:pool_allocator;
 
 import :allocator;
 import :pointer_math;
 
-namespace vulkan_engine::memory {
+namespace game_engine::memory {
 
 export class PoolAllocator final : public Allocator {
  public:
@@ -60,4 +60,4 @@ export class PoolAllocator final : public Allocator {
   size_t m_object_size;
   size_t m_object_alignment;
 };
-}  // namespace vulkan_engine::memory
+}  // namespace game_engine::memory

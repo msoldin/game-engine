@@ -1,19 +1,13 @@
-//
-// Created by marvi on 27.03.2024.
-//
-
 module;
-
 #include <chrono>
 #include <cmath>
-
-export module vulkan_engine.core:timer;
+export module game_engine.core:timer;
 
 namespace {
 constexpr double MILLISECONDS_IN_SECOND = 1000.0;
 }
 
-namespace vulkan_engine::core {
+namespace game_engine::core {
 
 export class Timer {
  public:
@@ -46,4 +40,4 @@ export class Timer {
   std::chrono::high_resolution_clock::time_point m_startTime;
   bool m_started;
 };
-}  // namespace vulkan_engine::core
+}  // namespace game_engine::core

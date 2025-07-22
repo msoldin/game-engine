@@ -7,9 +7,9 @@ module;
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <glm/glm.hpp>
 
-export module vulkan_engine.gfx:camera;
+export module game_engine.gfx.vulkan:camera;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 
 export class Camera {
  public:
@@ -86,4 +86,4 @@ export class Camera {
   glm::mat4 m_viewMatrix{1.f};
 };
 
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

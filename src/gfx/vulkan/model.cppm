@@ -12,11 +12,11 @@ module;
 #include <glm/glm.hpp>
 #include <vector>
 
-export module vulkan_engine.gfx:model;
+export module game_engine.gfx.vulkan:model;
 
 import :device;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 
 export class Model {
  public:
@@ -88,4 +88,4 @@ export class Model {
     vkUnmapMemory(m_device.device(), m_vertexBufferMemory);
   }
 };
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

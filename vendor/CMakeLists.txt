@@ -1,1 +1,4 @@
-add_subdirectory(raylib)
+if (USE_SDL)
+    add_subdirectory(SDL)
+    add_subdirectory(SDL_image)
+endif ()

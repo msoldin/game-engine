@@ -10,12 +10,12 @@ module;
 
 #include <fstream>
 
-export module vulkan_engine.gfx:pipeline;
+export module game_engine.gfx.vulkan:pipeline;
 
 import :model;
 import :device;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 
 struct PipelineConfigInfo {
   PipelineConfigInfo() = default;
@@ -216,4 +216,4 @@ export class Pipeline {
   }
 };
 
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

@@ -1,9 +1,9 @@
 module;
 #include <concepts>
 #include <cstddef>
-export module vulkan_engine.ecs:component;
+export module game_engine.ecs:component;
 
-namespace vulkan_engine::ecs {
+namespace game_engine::ecs {
 
 using ComponentTypeId = std::size_t;
 
@@ -39,4 +39,4 @@ class Component : public IComponent {
 
 template <typename T>
 concept IsComponent = std::derived_from<T, IComponent>;
-}  // namespace vulkan_engine::ecs
+}  // namespace game_engine::ecs

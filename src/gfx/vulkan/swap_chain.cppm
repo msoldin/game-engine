@@ -10,11 +10,11 @@ module;
 #include <stdexcept>
 #include <vector>
 
-export module vulkan_engine.gfx:swap_chain;
+export module game_engine.gfx.vulkan:swap_chain;
 
 import :device;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 
 class SwapChain {
  public:
@@ -437,4 +437,4 @@ class SwapChain {
   size_t currentFrame = 0;
 };
 
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

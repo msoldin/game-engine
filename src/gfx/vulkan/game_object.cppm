@@ -2,11 +2,11 @@ module;
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
 
-export module vulkan_engine.gfx:game_object;
+export module game_engine.gfx.vulkan:game_object;
 
 import :model;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 export struct TransformComponent {
   glm::vec3 translation{};
   glm::vec3 scale{1.f, 1.f, 1.f};
@@ -69,4 +69,4 @@ export class GameObject {
 
   id_t id_;
 };
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

@@ -5,13 +5,13 @@ module;
 
 #include <cassert>
 
-export module vulkan_engine.gfx:renderer;
+export module game_engine.gfx.vulkan:renderer;
 
 import :window;
 import :device;
 import :swap_chain;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 
 export class Renderer {
  public:
@@ -158,4 +158,4 @@ export class Renderer {
     }
   }
 };
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

@@ -2,12 +2,12 @@ module;
 #include <cstddef>
 #include <optional>
 #include <utility>
-export module vulkan_engine.ecs:entity;
+export module game_engine.ecs:entity;
 
 import :component;
 import :component_manager;
 
-namespace vulkan_engine::ecs {
+namespace game_engine::ecs {
 export class Entity final {
   friend class EntityManager;
   ComponentManager* m_component_manager = nullptr;
@@ -34,4 +34,4 @@ export class Entity final {
     return m_component_manager->getComponents<Ts...>(m_entity_id);
   }
 };
-}  // namespace vulkan_engine::ecs
+}  // namespace game_engine::ecs

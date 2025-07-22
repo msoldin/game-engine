@@ -4,15 +4,15 @@ module;
 #include <typeindex>
 #include <vector>
 #include <unordered_map>
-export module vulkan_engine.ecs:system_manager;
+export module game_engine.ecs:system_manager;
 
 import :system;
 import :component_manager;
 import :entity_manager;
 
-import vulkan_engine.memory;
+import game_engine.memory;
 
-namespace vulkan_engine::ecs {
+namespace game_engine::ecs {
 
 export class SystemManager final {
  public:
@@ -75,4 +75,4 @@ export class SystemManager final {
   }
 };
 
-}  // namespace vulkan_engine::ecs
+}  // namespace game_engine::ecs

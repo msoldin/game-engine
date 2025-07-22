@@ -1,12 +1,12 @@
 module;
 #include <cstdint>
-export module vulkan_engine.ecs:system;
+export module game_engine.ecs:system;
 
-import vulkan_engine.memory;
+import game_engine.memory;
 import :entity_manager;
 import :component_manager;
 
-namespace vulkan_engine::ecs {
+namespace game_engine::ecs {
 
 export class System {
  public:
@@ -18,4 +18,4 @@ export class System {
 
   virtual void postUpdate(uint64_t dt) = 0;
 };
-}  // namespace vulkan_engine::ecs
+}  // namespace game_engine::ecs

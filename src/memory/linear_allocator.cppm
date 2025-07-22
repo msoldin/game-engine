@@ -1,12 +1,12 @@
 module;
 #include <unistd.h>
 #include <cassert>
-export module vulkan_engine.memory:linear_allocator;
+export module game_engine.memory:linear_allocator;
 
 import :allocator;
 import :pointer_math;
 
-namespace vulkan_engine::memory {
+namespace game_engine::memory {
 export class LinearAllocator final : public Allocator {
  public:
   explicit LinearAllocator(const size_t size) : Allocator(size), m_current_pos(m_memory_start) {}
@@ -35,4 +35,4 @@ private:
   void* m_current_pos;
 };
 
-}  // namespace vulkan_engine::memory
+}  // namespace game_engine::memory

@@ -9,14 +9,14 @@ module;
 #include <memory>
 #include <vector>
 
-export module vulkan_engine.gfx:render_system;
+export module game_engine.gfx.vulkan:render_system;
 
 import :device;
 import :camera;
 import :pipeline;
 import :game_object;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 
 struct SimplePushConstantData {
   glm::mat4 transform{1.0f};
@@ -84,4 +84,4 @@ export class RenderSystem {
   std::unique_ptr<Pipeline> pipeline_;
 };
 
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

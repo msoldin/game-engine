@@ -3,7 +3,7 @@
 //
 module;
 #include <memory>
-export module vulkan_engine.ecs:coordinator;
+export module game_engine.ecs:coordinator;
 
 import :system;
 import :system_manager;
@@ -11,7 +11,7 @@ import :entity_manager;
 import :component_manager;
 import :entity;
 
-namespace vulkan_engine::ecs {
+namespace game_engine::ecs {
 export class CoordinatorBuilder;
 
 export class Coordinator {
@@ -51,4 +51,4 @@ class CoordinatorBuilder final {
 
   std::unique_ptr<Coordinator> build() { return std::unique_ptr<Coordinator>(new Coordinator()); }
 };
-}  // namespace vulkan_engine::ecs
+}  // namespace game_engine::ecs

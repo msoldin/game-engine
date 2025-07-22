@@ -8,11 +8,11 @@ module;
 #include <unordered_set>
 #include <vector>
 
-export module vulkan_engine.gfx:device;
+export module game_engine.gfx.vulkan:device;
 
 import :window;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                     const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
@@ -549,4 +549,4 @@ export class Device {
   const std::vector<const char*> DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 };
 
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

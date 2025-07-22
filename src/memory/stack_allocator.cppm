@@ -2,12 +2,12 @@ module;
 #include <unistd.h>
 
 #include <cassert>
-export module vulkan_engine.memory:stack_allocator;
+export module game_engine.memory:stack_allocator;
 
 import :allocator;
 import :pointer_math;
 
-namespace vulkan_engine::memory {
+namespace game_engine::memory {
 
 export class StackAllocator final : public Allocator {
  public:
@@ -61,4 +61,4 @@ export class StackAllocator final : public Allocator {
   };
 };
 
-}  // namespace vulkan_engine::memory
+}  // namespace game_engine::memory

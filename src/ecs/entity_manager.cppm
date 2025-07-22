@@ -1,13 +1,13 @@
 module;
 #include <vector>
-export module vulkan_engine.ecs:entity_manager;
+export module game_engine.ecs:entity_manager;
 
 import :entity;
 import :component_manager;
 
-import vulkan_engine.memory;
+import game_engine.memory;
 
-namespace vulkan_engine::ecs {
+namespace game_engine::ecs {
 export class EntityManager {
  public:
   explicit EntityManager(ComponentManager* component_manager) : m_component_manager(component_manager) {}
@@ -32,4 +32,4 @@ export class EntityManager {
   std::vector<Entity*> m_entities;
   ComponentManager* m_component_manager;
 };
-}  // namespace vulkan_engine::ecs
+}  // namespace game_engine::ecs

@@ -2,11 +2,13 @@ module;
 #include <format>
 #include <sstream>
 #include <stdexcept>
-export module vulkan_engine.error;
+export module game_engine.error;
 
-namespace vulkan_engine::error {
+namespace game_engine::error {
 export enum class ErrorType {
   kEcsError,
+  kGfxError,
+  kAssetError,
 };
 
 export class Error final : public std::runtime_error {
@@ -26,6 +28,12 @@ export class Error final : public std::runtime_error {
       case ErrorType::kEcsError:
         oss << "EcsError";
         break;
+      case ErrorType::kGfxError:
+        oss << "GfxError";
+        break;
+      case ErrorType::kAssetError:
+        oss << "AssetError";
+        break;
       default:
         oss << "Unknown";
         break;
@@ -39,4 +47,4 @@ export class Error final : public std::runtime_error {
  private:
   ErrorType m_error_type;
 };
-}  // namespace vulkan_engine::error
+}  // namespace game_engine::error

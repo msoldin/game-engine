@@ -1,15 +1,8 @@
-//
-// Created by marvi on 23.11.2024.
-//
+module;
+export module game_engine.gfx;
 
-export module vulkan_engine.gfx;
+export import game_engine.gfx.api;
 
-export import :camera;
-export import :device;
-export import :game_object;
-export import :model;
-export import :pipeline;
-export import :render_system;
-export import :renderer;
-export import :swap_chain;
-export import :window;
+#ifdef USE_SDL
+export import game_engine.gfx.sdl;
+#endif

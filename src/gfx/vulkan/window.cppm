@@ -9,9 +9,9 @@ module;
 #include <stdexcept>
 #include <string>
 
-export module vulkan_engine.gfx:window;
+export module game_engine.gfx.vulkan:window;
 
-namespace vulkan_engine::gfx {
+namespace game_engine::gfx {
 export class Window {
  public:
   Window(int width, int heigh, std::string title) : m_width(width), m_height(heigh), m_windowName(title) { initWindow(); }
@@ -63,4 +63,4 @@ export class Window {
     glfwSetFramebufferSizeCallback(m_window, framebufferResizeCallback);
   }
 };
-}  // namespace vulkan_engine::gfx
+}  // namespace game_engine::gfx

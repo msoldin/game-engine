@@ -2,9 +2,9 @@ module;
 #include <iostream>
 #include <memory>
 #include <utility>
-export module vulkan_engine.memory:allocator;
+export module game_engine.memory:allocator;
 
-namespace vulkan_engine::memory {
+namespace game_engine::memory {
 
 export class IAllocator {
  public:
@@ -45,4 +45,4 @@ export class Allocator : public IAllocator {
   size_t m_space_left;
   size_t m_num_allocations{0};
 };
-}  // namespace vulkan_engine::memory
+}  // namespace game_engine::memory

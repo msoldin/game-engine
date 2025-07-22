@@ -4,11 +4,11 @@ module;
 #include <cassert>
 #include <memory>
 #include <stack>
-export module vulkan_engine.memory:chunk_allocator;
+export module game_engine.memory:chunk_allocator;
 
 import :pool_allocator;
 
-namespace vulkan_engine::memory {
+namespace game_engine::memory {
 
 export template <typename T>
 class ChunkAllocator final : public IAllocator {
@@ -34,4 +34,4 @@ public:
   std::stack<std::unique_ptr<PoolAllocator>> m_chunks;
 };
 
-}  // namespace vulkan_engine::memory
+}  // namespace game_engine::memory
