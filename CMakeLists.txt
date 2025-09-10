@@ -30,11 +30,11 @@ add_subdirectory(vendor)
 if (USE_VULKAN)
     find_package(Vulkan REQUIRED)
     find_package(glfw3 REQUIRED)
-    find_package(glm REQUIRED)
 endif ()
 
 find_package(Glog REQUIRED)
 find_package(GTest REQUIRED)
+find_package(glm REQUIRED)
 
 # Enable testing with CTest
 enable_testing()
@@ -65,7 +65,7 @@ endif ()
 add_library(${PROJECT_NAME} STATIC)
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET CXX_MODULES FILES ${MODULE_FILES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE glog::glog)
+target_link_libraries(${PROJECT_NAME} PRIVATE glog::glog glm::glm)
 target_include_directories(${PROJECT_NAME} PUBLIC src)
 
 if (USE_SDL)
@@ -75,7 +75,7 @@ if (USE_SDL)
             $<$<BOOL:${USE_SDL}>:USE_SDL>
     )
 elseif (USE_VULKAN)
-    target_link_libraries(${PROJECT_NAME} PRIVATE glog::glog glfw Vulkan::Vulkan glm::glm)
+    target_link_libraries(${PROJECT_NAME} PRIVATE glog::glog glfw Vulkan::Vulkan)
 endif ()
 
 # Add the test folder to the project

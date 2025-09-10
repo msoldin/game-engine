@@ -1,6 +1,7 @@
 module;
 #include <SDL3/SDL.h>
 #include <glog/logging.h>
+
 #include <glm/glm.hpp>
 export module game_engine.gfx.sdl:renderer;
 
@@ -34,22 +35,32 @@ export class SdlRenderer final : public Renderer {
       throw error::Error(error::ErrorType::kEcsError, "SDL_CreateRenderer Error: '{}'", SDL_GetError());
     }
     m_renderer.reset(raw_renderer);
+    SDL_SetRenderScale(m_renderer.get(), 2, 2);
   }
   ~SdlRenderer() override { SDL_Quit(); }
-  void render() const override { SDL_RenderPresent(m_renderer.get()); }
+  void render() const override {
+    SDL_RenderPresent(m_renderer.get());
+  }
+  void clear() const override {
+    SDL_SetRenderDrawColor(m_renderer.get(), 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(m_renderer.get());
+  }
   void render_rectangle(const Rectangle& rectangle, const Color& color) override {
     SDL_SetRenderDrawColor(m_renderer.get(), color.r, color.g, color.b, color.a);
     const SDL_FRect sdl_rect = {rectangle.x, rectangle.y, rectangle.width, rectangle.height};
     SDL_RenderRect(m_renderer.get(), &sdl_rect);
   }
-  void render_texture(const std::shared_ptr<Texture>& texture) override {
+  void render_texture(const std::shared_ptr<Texture>& texture, const glm::fvec2 position) override {
     if (auto const sdl_texture = std::dynamic_pointer_cast<SdlTexture>(texture)) {
-      constexpr SDL_FRect clip = {0, 0, 0};
-      constexpr SDL_FRect render_target = {0, 0, 0};
+      const SDL_FRect clip = {texture->offset_x(), texture->offset_y(), texture->width(), texture->height()};
+      const SDL_FRect render_target = {position.x, position.y, texture->width(), texture->height()};
       SDL_RenderTexture(m_renderer.get(), sdl_texture->get_native_texture(), &clip, &render_target);
+    } else if (auto const sdl_animation = std::dynamic_pointer_cast<SdlAnimation>(texture)) {
+      const SDL_FRect clip = {texture->offset_x(), texture->offset_y(), texture->width(), texture->height()};
+      const SDL_FRect render_target = {position.x, position.y, texture->width(), texture->height()};
+      SDL_RenderTexture(m_renderer.get(), sdl_animation->get_current_frame(), &clip, &render_target);
     }
   }
   SDL_Renderer& get_native_renderer() const { return *m_renderer.get(); }
-  void clear() const;
 };
 }  // namespace game_engine::gfx::sdl

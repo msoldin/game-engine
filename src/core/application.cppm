@@ -45,6 +45,7 @@ export class Application final {
       LOG(INFO) << "FPS: " << avgFps << " UPS: " << avgUps;
 
       while (accumulator >= SCREEN_TIME_PER_FRAME) {
+        m_renderer->clear();
         update(SCREEN_TIME_PER_FRAME);
         accumulator -= SCREEN_TIME_PER_FRAME;
         countedUpdates++;
